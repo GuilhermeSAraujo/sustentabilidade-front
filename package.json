@@ -2,7 +2,6 @@
   "name": "sustentabilidade-front",
   "private": true,
   "version": "0.1.0",
-  "homepage": "https://guilhermesaraujo.github.io/sustentabilidade-front/#/",
   "type": "module",
   "scripts": {
     "dev": "vite",
