@@ -3,8 +3,6 @@ import routes from "../models/Routes";
 
 const Router = () => {
 
-	
-
 	return(
 			<RouterProvider router={routes} />
 	)

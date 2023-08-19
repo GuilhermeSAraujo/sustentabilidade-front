@@ -1,15 +1,15 @@
 import { LoadingButton } from "@mui/lab";
 import { Alert, Box, IconButton, Link, TextField, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { ISignIn } from "../../../models/user";
+import { ISignUp } from "../../../models/user";
 import * as Yup from 'yup'
 import { auth } from "../../../firebase/firebase-config";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import CloseIcon from '@mui/icons-material/Close';
 
-const SignIn = () => {
+const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
@@ -29,17 +29,15 @@ const SignIn = () => {
     register,
     handleSubmit,
     formState: { isValid, errors },
-  } = useForm<ISignIn>({
+  } = useForm<ISignUp>({
     mode: "onBlur",
     resolver: yupResolver(formSchema),
   });
 
   const submitForm = handleSubmit(async (data) => {
-    console.log("guizinnn", data);
     try{
       setLoading(true);
-      throw new Error('Errrrrrou');
-      await createUserWithEmailAndPassword(auth, data.email, data.password)
+      await createUserWithEmailAndPassword(auth, data.email, data.passwordConfirm)
       setLoading(false);
     }catch(err){
       setError(true);
@@ -118,5 +116,5 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;
 

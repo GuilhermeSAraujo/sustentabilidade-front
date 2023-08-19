@@ -1,10 +1,14 @@
-import { createBrowserRouter } from "react-router-dom";
-import { SignIn } from "../../pages/SignIn";
+import { createHashRouter } from "react-router-dom";
+import { SignUp } from "../../pages/SignUp";
 
-const routes = createBrowserRouter([
+const routes = createHashRouter([
   {
-    path: "/signin",
-    element: <SignIn />,
+    path: "/",
+    element: <SignUp />,
+  },
+  {
+    path: "/signup",
+    element: <SignUp />,
   }
 ]);
 
