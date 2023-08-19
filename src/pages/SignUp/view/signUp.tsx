@@ -70,7 +70,7 @@ const SignUp = () => {
           }>Ocorreu um erro. Tente novamente em alguns minutos.</Alert>
         </Box>
       )}
-      <Box width="85%" border="1px solid lightgray" borderRadius='2.5%' padding={2.5} paddingBottom={2.5} mb='50%' sx={{ borderShadow: '15px 12px 15px -3px rgba(0,0,0,0.1)', backgroundColor: 'lightgray'}}>
+      <Box width="85%" border="1px solid lightgray" borderRadius='2.5%' padding={2.5} paddingBottom={2.5} mb={{xs: '50%', md: 0}} sx={{ borderShadow: '15px 12px 15px -3px rgba(0,0,0,0.1)', backgroundColor: 'lightgray'}}>
         <Typography variant="h4" sx={{ textAlign: "left" }}>
           Cadastre-se!
         </Typography>
