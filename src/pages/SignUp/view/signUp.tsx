@@ -1,14 +1,14 @@
 import { LoadingButton } from "@mui/lab";
 import { Alert, Box, IconButton, TextField, Typography } from "@mui/material";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ISignUp } from "../../../models/user";
-import * as Yup from 'yup'
+import * as Yup from "yup";
 import { auth } from "../../../firebase/firebase-config";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
 
 const SignUp = () => {
   const [loading, setLoading] = useState(false);
@@ -16,15 +16,15 @@ const SignUp = () => {
 
   const formSchema = Yup.object().shape({
     email: Yup.string()
-      .email('Por favor, insira um e-mail válido')
-      .required('Email é obrigatório'),
+      .email("Por favor, insira um e-mail válido")
+      .required("Email é obrigatório"),
     password: Yup.string()
-      .required('Campo obrigatório')
-      .min(3, 'Password must be at 3 char long'),
+      .required("Campo obrigatório")
+      .min(3, "Password must be at 3 char long"),
     passwordConfirm: Yup.string()
-      .required('Campo obrigatório')
-      .oneOf([Yup.ref('password')], 'As senhas não coincidem')
-  })
+      .required("Campo obrigatório")
+      .oneOf([Yup.ref("password")], "As senhas não coincidem"),
+  });
 
   const {
     register,
@@ -36,13 +36,17 @@ const SignUp = () => {
   });
 
   const submitForm = handleSubmit(async (data) => {
-    try{
+    try {
       setLoading(true);
-      await createUserWithEmailAndPassword(auth, data.email, data.passwordConfirm)
+      await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.passwordConfirm
+      );
       setLoading(false);
-    }catch(err){
+    } catch (err) {
       setError(true);
-    }finally{
+    } finally {
       setLoading(false);
     }
   });
@@ -53,25 +57,42 @@ const SignUp = () => {
       display="flex"
       flexDirection="column"
       alignItems="center"
-      justifyContent='center'
+      justifyContent="center"
     >
       {error && (
-        <Box sx={{ position: 'absolute', top: 0, width: '100%' }}>
-          <Alert severity="error" action={
-            <IconButton
-              aria-label="close"
-              color="inherit"
-              size="small"
-              onClick={() => {
-                setError(false);
-              }}
-            >
-              <CloseIcon fontSize="inherit" />
-            </IconButton>
-          }>Ocorreu um erro. Tente novamente em alguns minutos.</Alert>
+        <Box sx={{ position: "absolute", top: 0, width: "100%" }}>
+          <Alert
+            severity="error"
+            action={
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                size="small"
+                onClick={() => {
+                  setError(false);
+                }}
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>
+            }
+          >
+            Ocorreu um erro. Tente novamente em alguns minutos.
+          </Alert>
         </Box>
       )}
-      <Box width="85%" border="1px solid lightgray" borderRadius='2.5%' padding={2.5} paddingBottom={2.5} mb={{xs: '50%', sm: 0}} sx={{ borderShadow: '15px 12px 15px -3px rgba(0,0,0,0.1)', backgroundColor: 'lightgray'}}>
+      <Box
+        width="85%"
+        border="1px solid lightgray"
+        borderRadius="2.5%"
+        padding={2.5}
+        paddingBottom={2.5}
+        mb={{ xs: "50%", sm: 0 }}
+        sx={{
+          borderShadow: "15px 12px 15px -3px rgba(0,0,0,0.1)",
+          backgroundColor: "lightgray",
+          maxWidth: '500px'
+        }}
+      >
         <Typography variant="h4" sx={{ textAlign: "left" }}>
           Cadastre-se!
         </Typography>
@@ -95,27 +116,34 @@ const SignUp = () => {
               error={Boolean(errors.password)}
               helperText={errors.password?.message}
               {...register("password")}
-							type="password"
+              type="password"
               fullWidth
             />
-           <TextField
+            <TextField
               label="Confirme a senha"
               error={Boolean(errors.passwordConfirm)}
               helperText={errors.passwordConfirm?.message}
               {...register("passwordConfirm")}
-							type="password"
+              type="password"
               fullWidth
             />
-            <LoadingButton disabled={!isValid} loading={loading} variant="contained" type='submit' fullWidth>
+            <LoadingButton
+              disabled={!isValid}
+              loading={loading}
+              variant="contained"
+              type="submit"
+              fullWidth
+            >
               Submeter
             </LoadingButton>
           </Box>
         </form>
-        <Typography variant="body2" mt={2}>Já possui uma conta? <Link to='/signin' >Entre aqui.</Link></Typography>
+        <Typography variant="body2" mt={2}>
+          Já possui uma conta? <Link to="/signin">Entre aqui.</Link>
+        </Typography>
       </Box>
     </Box>
   );
 };
 
 export default SignUp;
-
