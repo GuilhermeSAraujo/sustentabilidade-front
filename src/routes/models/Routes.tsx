@@ -1,15 +1,17 @@
-import { createHashRouter } from "react-router-dom";
+import { Home } from "../../pages/Home";
 import { SignUp } from "../../pages/SignUp";
 
-const routes = createHashRouter([
+export const routes = [
   {
     path: "/",
-    element: <SignUp />,
+    element: <Home />,
   },
   {
     path: "/signup",
     element: <SignUp />,
+  },
+  {
+    path: '/home',
+    element: <Home/>
   }
-]);
-
-export default routes;
+];

@@ -1,5 +1,6 @@
 import { LoadingButton } from "@mui/lab";
-import { Alert, Box, IconButton, Link, TextField, Typography } from "@mui/material";
+import { Alert, Box, IconButton, TextField, Typography } from "@mui/material";
+import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { ISignUp } from "../../../models/user";
 import * as Yup from 'yup'
@@ -70,7 +71,7 @@ const SignUp = () => {
           }>Ocorreu um erro. Tente novamente em alguns minutos.</Alert>
         </Box>
       )}
-      <Box width="85%" border="1px solid lightgray" borderRadius='2.5%' padding={2.5} paddingBottom={2.5} mb={{xs: '50%', md: 0}} sx={{ borderShadow: '15px 12px 15px -3px rgba(0,0,0,0.1)', backgroundColor: 'lightgray'}}>
+      <Box width="85%" border="1px solid lightgray" borderRadius='2.5%' padding={2.5} paddingBottom={2.5} mb={{xs: '50%', sm: 0}} sx={{ borderShadow: '15px 12px 15px -3px rgba(0,0,0,0.1)', backgroundColor: 'lightgray'}}>
         <Typography variant="h4" sx={{ textAlign: "left" }}>
           Cadastre-se!
         </Typography>
@@ -110,7 +111,7 @@ const SignUp = () => {
             </LoadingButton>
           </Box>
         </form>
-        <Typography variant="body2" mt={2}>Já possui uma conta? <Link>Entre aqui.</Link></Typography>
+        <Typography variant="body2" mt={2}>Já possui uma conta? <Link to='/home' >Entre aqui.</Link></Typography>
       </Box>
     </Box>
   );
