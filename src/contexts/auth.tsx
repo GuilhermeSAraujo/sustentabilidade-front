@@ -1,29 +1,43 @@
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { createContext, useContext } from 'react';
-import { ILogin } from '../models/user';
+import { createContext, useState } from "react";
+import { ILogin } from "../models/user";
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { auth } from "../firebase/firebase-config";
 
 interface AuthContextData {
   signed: boolean;
-  login({auth, email, password} : ILogin ): Promise<void>;
+  login({ email, password }: ILogin): Promise<void>;
+  logOut(): Promise<void>;
+  email: string | null;
 }
 
-const AuthContext = createContext<AuthContextData>({} as AuthContextData);
- 
-export const AuthProvider = ({ children } : { children: React.ReactNode }) => {
+export const AuthContext = createContext<AuthContextData>(
+  {} as AuthContextData
+);
 
-  const login = async ({auth, email, password} : ILogin ) => {
-    await signInWithEmailAndPassword(auth, email, password)
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const [email, setEmail] = useState<string | null>(null);
+
+
+  const login = async ({ email, password }: ILogin) => {
+    await signInWithEmailAndPassword(auth, email, password);
+    setEmail(email);
   };
 
- return (
-   <AuthContext.Provider value={{ signed: false, login }} >
-     {children}
-   </AuthContext.Provider>
- );
+  const logOut = async () => {
+    await signOut(auth);
+    setEmail(null);
+  };
+
+  return (
+    <AuthContext.Provider
+      value={{
+        signed: Boolean(email),
+        email,
+        login,
+        logOut,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
-
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-
-  return context;
-}

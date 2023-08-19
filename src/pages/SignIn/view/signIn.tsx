@@ -1,28 +1,27 @@
+import { yupResolver } from "@hookform/resolvers/yup";
+import CloseIcon from "@mui/icons-material/Close";
 import { LoadingButton } from "@mui/lab";
 import { Alert, Box, IconButton, TextField, Typography } from "@mui/material";
-import { Link, useNavigate } from 'react-router-dom';
-import { useForm } from "react-hook-form";
-import { ISignIn } from "../../../models/user";
-import * as Yup from 'yup'
-import { auth } from "../../../firebase/firebase-config";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
-import CloseIcon from '@mui/icons-material/Close';
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import * as Yup from "yup";
+import { useAuth } from "../../../hooks/useAuth";
+import { ISignIn } from "../../../models/user";
 
 const SignIn = () => {
-	const history = useNavigate();
-	
-	const [loading, setLoading] = useState(false);
+  const history = useNavigate();
+  const { login } = useAuth()
+
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   const formSchema = Yup.object().shape({
     email: Yup.string()
-      .email('Por favor, insira um e-mail válido')
-      .required('Email é obrigatório'),
-    password: Yup.string()
-      .required('Campo obrigatório')
-  })
+      .email("Por favor, insira um e-mail válido")
+      .required("Email é obrigatório"),
+    password: Yup.string().required("Campo obrigatório"),
+  });
 
   const {
     register,
@@ -34,43 +33,60 @@ const SignIn = () => {
   });
 
   const submitForm = handleSubmit(async (data) => {
-    try{
+    try {
       setLoading(true);
-      await signInWithEmailAndPassword(auth, data.email, data.password)
+      // await signInWithEmailAndPassword(auth, data.email, data.password)
+      await login({ email: data.email, password: data.password });
       setLoading(false);
-			history('/home');
-    }catch(err){
+      history("/home");
+    } catch (err) {
       setError(true);
-    }finally{
+    } finally {
       setLoading(false);
     }
   });
 
-	return (
-	<Box
-		height="100vh"
-		display="flex"
-		flexDirection="column"
-		alignItems="center"
-		justifyContent='center'
-	>
-		{error && (
-        <Box sx={{ position: 'absolute', top: 0, width: '100%' }}>
-          <Alert severity="error" action={
-            <IconButton
-              aria-label="close"
-              color="inherit"
-              size="small"
-              onClick={() => {
-                setError(false);
-              }}
-            >
-              <CloseIcon fontSize="inherit" />
-            </IconButton>
-          }>Ocorreu um erro. Tente novamente em alguns minutos.</Alert>
+  return (
+    <Box
+      height="100vh"
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+    >
+      {error && (
+        <Box sx={{ position: "absolute", top: 0, width: "100%" }}>
+          <Alert
+            severity="error"
+            action={
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                size="small"
+                onClick={() => {
+                  setError(false);
+                }}
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>
+            }
+          >
+            Ocorreu um erro. Tente novamente em alguns minutos.
+          </Alert>
         </Box>
       )}
-      <Box width="85%" border="1px solid lightgray" borderRadius='2.5%' padding={2.5} paddingBottom={2.5} mb={{xs: '50%', sm: 0}} sx={{ borderShadow: '15px 12px 15px -3px rgba(0,0,0,0.1)', backgroundColor: 'lightgray'}}>
+      <Box
+        width="85%"
+        border="1px solid lightgray"
+        borderRadius="2.5%"
+        padding={2.5}
+        paddingBottom={2.5}
+        mb={{ xs: "50%", sm: 0 }}
+        sx={{
+          borderShadow: "15px 12px 15px -3px rgba(0,0,0,0.1)",
+          backgroundColor: "lightgray",
+        }}
+      >
         <Typography variant="h4" sx={{ textAlign: "left" }}>
           LogIn!
         </Typography>
@@ -94,18 +110,26 @@ const SignIn = () => {
               error={Boolean(errors.password)}
               helperText={errors.password?.message}
               {...register("password")}
-							type="password"
+              type="password"
               fullWidth
             />
-            <LoadingButton disabled={!isValid} loading={loading} variant="contained" type='submit' fullWidth>
+            <LoadingButton
+              disabled={!isValid}
+              loading={loading}
+              variant="contained"
+              type="submit"
+              fullWidth
+            >
               Entrar
             </LoadingButton>
           </Box>
         </form>
-        <Typography variant="body2" mt={2}>Não possui uma conta? <Link to='/signup'>Clique aqui.</Link></Typography>
+        <Typography variant="body2" mt={2}>
+          Não possui uma conta? <Link to="/signup">Clique aqui.</Link>
+        </Typography>
       </Box>
-	</Box>
-	)
-}
+    </Box>
+  );
+};
 
 export default SignIn;
