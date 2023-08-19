@@ -1,3 +1,6 @@
+# Deploy
+https://dev.to/shashannkbawa/deploying-vite-app-to-github-pages-3ane
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
