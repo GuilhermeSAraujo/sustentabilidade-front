@@ -1,11 +1,8 @@
-import { Box, Button, Typography } from "@mui/material";
-import { useAuth } from "../../../hooks/useAuth";
+import { Box, Typography } from "@mui/material";
 
 const Home = () => {
-  const { logOut } = useAuth();
   return (
     <Box>
-      <Button onClick={logOut}>Sair</Button>
       <Typography variant='h1'>Home</Typography>
     </Box>
   );

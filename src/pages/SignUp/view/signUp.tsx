@@ -1,6 +1,6 @@
 import { LoadingButton } from "@mui/lab";
 import { Alert, Box, IconButton, TextField, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ISignUp } from "../../../models/user";
 import * as Yup from "yup";
@@ -14,6 +14,7 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
+  const history = useNavigate(); 
   const formSchema = Yup.object().shape({
     email: Yup.string()
       .email("Por favor, insira um e-mail válido")
@@ -43,6 +44,7 @@ const SignUp = () => {
         data.email,
         data.passwordConfirm
       );
+      history('/singIn');
       setLoading(false);
     } catch (err) {
       setError(true);
