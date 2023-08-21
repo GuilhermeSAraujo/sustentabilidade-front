@@ -1,7 +1,7 @@
-import { createContext, useState } from "react";
-import { ILogin } from "../models/user";
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { createContext, useState } from "react";
 import { auth } from "../firebase/firebase-config";
+import { ILogin } from "../models/user";
 
 interface AuthContextData {
   signed: boolean;

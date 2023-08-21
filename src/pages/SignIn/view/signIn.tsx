@@ -35,7 +35,6 @@ const SignIn = () => {
   const submitForm = handleSubmit(async (data) => {
     try {
       setLoading(true);
-      // await signInWithEmailAndPassword(auth, data.email, data.password)
       await login({ email: data.email, password: data.password });
       setLoading(false);
       history("/home");
