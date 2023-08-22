@@ -1,16 +1,18 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import CloseIcon from "@mui/icons-material/Close";
 import { LoadingButton } from "@mui/lab";
-import { Alert, Box, IconButton, TextField, Typography } from "@mui/material";
+import { Alert, Box, IconButton, TextField, Typography, useTheme } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useAuth } from "../../../hooks/useAuth";
 import { ISignIn } from "../../../models/user";
+import ForestIcon from '@mui/icons-material/Forest';
 
 const SignIn = () => {
   const history = useNavigate();
+  const theme = useTheme();
   const { login } = useAuth()
 
   const [loading, setLoading] = useState(false);
@@ -74,6 +76,10 @@ const SignIn = () => {
           </Alert>
         </Box>
       )}
+      <Box sx={{textAlign: 'center'}}>
+        <ForestIcon />
+        <Typography variant="h4" pb={3} sx={{ textAlign: "center" }}>Seja bem vindo(a) de volta!</Typography>
+      </Box>
       <Box
         width="85%"
         border="1px solid lightgray"
@@ -82,12 +88,12 @@ const SignIn = () => {
         paddingBottom={2.5}
         mb={{ xs: "50%", sm: 0 }}
         sx={{
-          borderShadow: "15px 12px 15px -3px rgba(0,0,0,0.1)",
-          backgroundColor: "lightgray",
+          boxShadow: "0px 7px 20px 7px rgba(0,0,0,0.4)",
+          backgroundColor: `${theme.palette.background.paper}`,
           maxWidth: '500px'
         }}
       >
-        <Typography variant="h4" sx={{ textAlign: "left" }}>
+        <Typography variant="h5" sx={{ textAlign: "left" }}>
           LogIn!
         </Typography>
         <form onSubmit={submitForm}>

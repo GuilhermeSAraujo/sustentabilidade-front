@@ -15,15 +15,11 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
 interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   window?: () => Window;
 }
 
 const drawerWidth = 240;
-const navItems = ['Home', 'About', 'Contact'];
+const navItems = ['Meus produtos', 'About', 'Contact'];
 
 export default function MenuMobile(props: Props) {
   const { window } = props;
@@ -36,7 +32,7 @@ export default function MenuMobile(props: Props) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        MUI
+        SUSTENTABILIDADE
       </Typography>
       <Divider />
       <List>

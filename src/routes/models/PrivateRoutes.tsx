@@ -1,16 +1,11 @@
-import { Route, Routes, HashRouter } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import { Home } from "../../pages/Home";
-import { useState } from "react";
 import MenuMobile from "../../shared/components/MenuMobile";
 
 const PrivateRoutes = () => {
-  const [menuIsVisible, setMenuIsVisible] = useState(true);
-
   return (
     <>
       <MenuMobile
-        menuIsVisible={menuIsVisible}
-        setMenuIsVisible={setMenuIsVisible}
       />
       <HashRouter>
         <Routes>

@@ -1,5 +1,5 @@
 import { LoadingButton } from "@mui/lab";
-import { Alert, Box, IconButton, TextField, Typography } from "@mui/material";
+import { Alert, Box, IconButton, TextField, Typography, useTheme } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ISignUp } from "../../../models/user";
@@ -11,10 +11,11 @@ import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 
 const SignUp = () => {
+  const history = useNavigate(); 
+  const theme = useTheme();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const history = useNavigate(); 
   const formSchema = Yup.object().shape({
     email: Yup.string()
       .email("Por favor, insira um e-mail válido")
@@ -90,8 +91,8 @@ const SignUp = () => {
         paddingBottom={2.5}
         mb={{ xs: "50%", sm: 0 }}
         sx={{
-          borderShadow: "15px 12px 15px -3px rgba(0,0,0,0.1)",
-          backgroundColor: "lightgray",
+          boxShadow: "0px 7px 20px 7px rgba(0,0,0,0.4)",
+          backgroundColor: `${theme.palette.background.paper}`,
           maxWidth: '500px'
         }}
       >

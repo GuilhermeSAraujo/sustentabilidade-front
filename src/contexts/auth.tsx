@@ -15,7 +15,7 @@ export const AuthContext = createContext<AuthContextData>(
 );
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [email, setEmail] = useState<string | null>('abc');
+  const [email, setEmail] = useState<string | null>(null);
 
 
   const login = async ({ email, password }: ILogin) => {
