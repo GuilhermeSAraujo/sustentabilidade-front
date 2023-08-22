@@ -76,9 +76,9 @@ const SignIn = () => {
           </Alert>
         </Box>
       )}
-      <Box sx={{textAlign: 'center'}}>
-        <ForestIcon />
-        <Typography variant="h4" pb={3} sx={{ textAlign: "center" }}>Seja bem vindo(a) de volta!</Typography>
+      <Box pb={3} sx={{textAlign: 'center'}}>
+        <ForestIcon fontSize="large" />
+        <Typography variant="h4" fontWeight={500} sx={{ textAlign: "center" }}>Seja bem vindo(a) de volta!</Typography>
       </Box>
       <Box
         width="85%"

@@ -9,6 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
+import NaturePeopleIcon from '@mui/icons-material/NaturePeople';
 
 const SignUp = () => {
   const history = useNavigate(); 
@@ -83,6 +84,12 @@ const SignUp = () => {
           </Alert>
         </Box>
       )}
+      <Box sx={{textAlign: 'center', paddingTop:{xs: 3}}} >
+        <NaturePeopleIcon fontSize="large" />
+      </Box>
+      <Box sx={{textAlign: 'center'}} pb={3}>
+        <Typography variant="overline" fontSize={15} sx={{ textAlign: "center" }}>Mudando o mundo, um passo sustentável de cada vez</Typography>
+      </Box>
       <Box
         width="85%"
         border="1px solid lightgray"
