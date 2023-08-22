@@ -103,7 +103,7 @@ const SignUp = () => {
           maxWidth: '500px'
         }}
       >
-        <Typography variant="h4" sx={{ textAlign: "left" }}>
+        <Typography variant="h5" sx={{ textAlign: "left" }}>
           Cadastre-se!
         </Typography>
         <form onSubmit={submitForm}>
