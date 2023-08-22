@@ -88,7 +88,7 @@ const SignUp = () => {
         <NaturePeopleIcon fontSize="large" />
       </Box>
       <Box sx={{textAlign: 'center'}} pb={3}>
-        <Typography variant="overline" fontSize={15} sx={{ textAlign: "center" }}>Mudando o mundo, um passo sustentável de cada vez</Typography>
+        <Typography variant="h4" fontWeight={500} sx={{ textAlign: "center" }}>Mudando o mundo, um passo sustentável de cada vez</Typography>
       </Box>
       <Box
         width="85%"
