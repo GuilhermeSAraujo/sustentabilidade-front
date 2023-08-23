@@ -1,23 +1,25 @@
-import { LoadingButton } from "@mui/lab";
-import { Alert, Box, IconButton, TextField, Typography, useTheme } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { ISignUp } from "../../../models/user";
-import * as Yup from "yup";
-import { auth } from "../../../firebase/firebase-config";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import NaturePeopleIcon from '@mui/icons-material/NaturePeople';
+import { LoadingButton } from "@mui/lab";
+import { Alert, Box, IconButton, TextField, Typography, useTheme } from "@mui/material";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import * as Yup from "yup";
+import { useAuth } from "../../../hooks/useAuth";
+import { IFSignUp } from "../../../models/user";
 
 const SignUp = () => {
   const history = useNavigate(); 
   const theme = useTheme();
+  const { signUp } = useAuth();
+  
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   const formSchema = Yup.object().shape({
+    name: Yup.string().required("Campo obrigatório"),
     email: Yup.string()
       .email("Por favor, insira um e-mail válido")
       .required("Email é obrigatório"),
@@ -33,7 +35,7 @@ const SignUp = () => {
     register,
     handleSubmit,
     formState: { isValid, errors },
-  } = useForm<ISignUp>({
+  } = useForm<IFSignUp>({
     mode: "onBlur",
     resolver: yupResolver(formSchema),
   });
@@ -41,11 +43,7 @@ const SignUp = () => {
   const submitForm = handleSubmit(async (data) => {
     try {
       setLoading(true);
-      await createUserWithEmailAndPassword(
-        auth,
-        data.email,
-        data.passwordConfirm
-      );
+      await signUp({ name: data.name, email: data.email, password: data.passwordConfirm });
       history('/singIn');
       setLoading(false);
     } catch (err) {
@@ -114,6 +112,13 @@ const SignUp = () => {
             alignItems="center"
             rowGap={2}
           >
+            <TextField
+              label="Nome"
+              error={Boolean(errors.name)}
+              helperText={errors.name?.message}
+              {...register("name")}
+              fullWidth
+            />
             <TextField
               label="E-mail"
               error={Boolean(errors.email)}
