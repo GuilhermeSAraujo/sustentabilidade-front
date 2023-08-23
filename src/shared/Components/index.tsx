@@ -1,2 +1,2 @@
-import MenuMobile from "./MenuMobile";
-export { MenuMobile }
+import Navbar from "./Navbar";
+export { Navbar }

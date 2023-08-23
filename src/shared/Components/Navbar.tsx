@@ -21,7 +21,7 @@ interface Props {
 const drawerWidth = 240;
 const navItems = ['Meus produtos', 'About', 'Contact'];
 
-const MenuMobile = (props: Props) => {
+const Navbar = (props: Props) => {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -103,4 +103,4 @@ const MenuMobile = (props: Props) => {
   );
 }
 
-export default MenuMobile;
+export default Navbar;
