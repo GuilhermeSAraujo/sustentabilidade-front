@@ -1,10 +1,11 @@
-export interface ISignUp{
+export interface IFSignUp{
+	name: string;
 	email: string;
 	password: string;
 	passwordConfirm: string;
 }
 
-export interface ISignIn{
+export interface IFSignIn{
 	email: string;
 	password: string;
 }
@@ -12,4 +13,16 @@ export interface ISignIn{
 export interface ILogin{
 	email: string;
 	password: string;
+}
+
+export interface ISignUp{
+	name: string;
+	email: string;
+	password: string;
+}
+
+export interface User{
+	id: number;
+	name: string;
+	email: string;
 }

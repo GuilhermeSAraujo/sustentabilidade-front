@@ -1,12 +1,11 @@
 import { HashRouter, Route, Routes } from "react-router-dom";
 import { Home } from "../../pages/Home";
-import MenuMobile from "../../shared/components/MenuMobile";
+import MenuMobile from "../../shared/Components/MenuMobile";
 
 const PrivateRoutes = () => {
   return (
     <>
-      <MenuMobile
-      />
+      <MenuMobile />
       <HashRouter>
         <Routes>
           <Route path="*" element={<Home />} />

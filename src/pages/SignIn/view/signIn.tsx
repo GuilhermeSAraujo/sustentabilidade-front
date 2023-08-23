@@ -1,5 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import CloseIcon from "@mui/icons-material/Close";
+import ForestIcon from '@mui/icons-material/Forest';
 import { LoadingButton } from "@mui/lab";
 import { Alert, Box, IconButton, TextField, Typography, useTheme } from "@mui/material";
 import { useState } from "react";
@@ -7,8 +8,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useAuth } from "../../../hooks/useAuth";
-import { ISignIn } from "../../../models/user";
-import ForestIcon from '@mui/icons-material/Forest';
+import { IFSignIn } from "../../../models/user";
 
 const SignIn = () => {
   const history = useNavigate();
@@ -29,7 +29,7 @@ const SignIn = () => {
     register,
     handleSubmit,
     formState: { isValid, errors },
-  } = useForm<ISignIn>({
+  } = useForm<IFSignIn>({
     mode: "onBlur",
     resolver: yupResolver(formSchema),
   });
