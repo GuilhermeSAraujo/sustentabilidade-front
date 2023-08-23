@@ -5,6 +5,9 @@ import "./main.css";
 import Router from "./routes/components/Router";
 import { AuthProvider } from "./contexts/auth";
 import { themeOptions } from "./shared/themeOptions";
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
