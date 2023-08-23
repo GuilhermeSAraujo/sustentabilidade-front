@@ -1,27 +1,84 @@
-name: App CI
+# name: App CI
 
-on:
-  push:
-    # Run on all branches
-    branches:
-      - "*"
-    # Run only if files modified are not docs
-    paths-ignore:
-      - "*.md"
-  pull_request:
-    # Run on all branches
-    branches:
-      - "*"
-    # Run only if files modified are not docs
-    paths-ignore:
-      - "*.md"
+# on:
+#   push:
+#     # Run on all branches
+#     branches:
+#       - "*"
+#     # Run only if files modified are not docs
+#     paths-ignore:
+#       - "*.md"
+#   pull_request:
+#     # Run on all branches
+#     branches:
+#       - "*"
+#     # Run only if files modified are not docs
+#     paths-ignore:
+#       - "*.md"
 
+# jobs:
+#   buildAndTest:
+#     name: Build & Test
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3
+
+#       - name: 🏗 Setup pnpm
+#         uses: pnpm/action-setup@v2
+#         with:
+#           version: 8
+
+#       - name: 🏗 Setup Node
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: 18
+#           cache: pnpm
+
+#       - name: 🗂️ Install dependencies
+#         run: pnpm i
+
+#       - name: 🔨 Build
+#         run: pnpm build
+
+#       # - name: 🧪 Test
+#       #   run: pnpm test:ci
+
+#       # Upload dist artifacts
+#       - uses: actions/upload-artifact@v3
+#         with:
+#           name: dist
+#           path: dist/
+
+#       # Upload coverage artifacts
+#       - uses: actions/upload-artifact@v3
+#         with:
+#           name: coverage
+#           path: coverage/lcov.info
+
+
+#       - name: Deploy
+#         run: |
+#           git config --global user.name $user_name
+#           git config --global user.email $user_email
+#           git remote set-url origin https://${github_token}@github.com/${repository}
+#           npm run deploy
+#         env:
+#           user_name: 'github-actions[bot]'
+#           user_email: 'github-actions[bot]@users.noreply.github.com'
+#           github_token: ${{ secrets.ACTIONS_DEPLOY_ACCESS_TOKEN }}
+#           repository: ${{ github.repository }}
+
+name: Build and Deploy
+on: [push]
+permissions:
+  contents: write
 jobs:
-  buildAndTest:
-    name: Build & Test
+  build-and-deploy:
+    concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
 
       - name: 🏗 Setup pnpm
         uses: pnpm/action-setup@v2
@@ -40,30 +97,7 @@ jobs:
       - name: 🔨 Build
         run: pnpm build
 
-      # - name: 🧪 Test
-      #   run: pnpm test:ci
-
-      # Upload dist artifacts
-      - uses: actions/upload-artifact@v3
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          name: dist
-          path: dist/
-
-      # Upload coverage artifacts
-      - uses: actions/upload-artifact@v3
-        with:
-          name: coverage
-          path: coverage/lcov.info
-
-
-      - name: Deploy
-        run: |
-          git config --global user.name $user_name
-          git config --global user.email $user_email
-          git remote set-url origin https://${github_token}@github.com/${repository}
-          npm run deploy
-        env:
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
-          github_token: ${{ secrets.ACTIONS_DEPLOY_ACCESS_TOKEN }}
-          repository: ${{ github.repository }}
+          folder: dist # The folder the action should deploy.
