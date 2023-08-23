@@ -21,7 +21,7 @@ interface Props {
 const drawerWidth = 240;
 const navItems = ['Meus produtos', 'About', 'Contact'];
 
-export default function MenuMobile(props: Props) {
+const MenuMobile = (props: Props) => {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -102,3 +102,5 @@ export default function MenuMobile(props: Props) {
     </Box>
   );
 }
+
+export default MenuMobile;
