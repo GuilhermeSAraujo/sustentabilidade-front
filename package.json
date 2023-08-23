@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
+  "home": "https://guilhermesaraujo.github.io/sustentabilidade-front/",
   "scripts": {
     "dev": "vite",
     "predeploy": "pnpm run build",
