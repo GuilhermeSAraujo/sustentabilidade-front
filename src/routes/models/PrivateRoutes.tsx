@@ -1,6 +1,6 @@
 import { HashRouter, Route, Routes } from "react-router-dom";
 import { Home } from "../../pages/Home";
-import MenuMobile from "../../shared/components/MenuMobile";
+import { MenuMobile } from "../../shared/components";
 
 const PrivateRoutes = () => {
   return (
