@@ -115,7 +115,7 @@ jobs:
         
       - name: Leak variables
         run: |
-          cd front-app
+          cd sustentabilidade-front
           ls -al
           cat .env
           cat .env | hexdump
