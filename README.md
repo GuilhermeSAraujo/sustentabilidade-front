@@ -2,7 +2,7 @@
 - VSCode - padrão;
 - Git - [Download](https://github.com/git-for-windows/git/releases/download/v2.42.0.windows.1/Git-2.42.0-64-bit.exe);
 - Node - [Download](https://nodejs.org/dist/v18.17.1/node-v18.17.1-x64.msi);
-- PNPM gerenciado de pacotes:
+- PNPM gerenciador de pacotes:
 	- No **powershell**, executar o seguinte comando: `iwr https://get.pnpm.io/install.ps1 -useb | iex`.
 
 ## Configurando o git
