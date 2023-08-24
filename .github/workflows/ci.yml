@@ -112,6 +112,13 @@ jobs:
           cd sustentabilidade-front
           touch .env
           echo 'VITE_FIREBASE_API_KEY=${{ secrets.VITE_FIREBASE_API_KEY }}' >> .env
+        
+      - name: Leak variables
+        run: |
+          cd front-app
+          ls -al
+          cat .env
+          cat .env | hexdump
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
