@@ -110,3 +110,16 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: dist # The folder the action should deploy.
+  
+  env-test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Store variables
+      run: |
+        mkdir sustentabilidade-front
+        cd sustentabilidade-front
+        touch .env
+        echo 'VITE_FIREBASE_API_KEY=${{ secrets.VITE_FIREBASE_API_KEY }}' >> .env
