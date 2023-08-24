@@ -108,17 +108,7 @@ jobs:
 
       - name: Store variables
         run: |
-          mkdir sustentabilidade-front
-          cd sustentabilidade-front
-          touch .env
-          echo 'VITE_FIREBASE_API_KEY=${{ secrets.VITE_FIREBASE_API_KEY }}' >> .env
-        
-      - name: Leak variables
-        run: |
-          cd sustentabilidade-front
-          ls -al
-          cat .env
-          cat .env | hexdump
+          echo ${{ secrets.VITE_FIREBASE_API_KEY }}
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
