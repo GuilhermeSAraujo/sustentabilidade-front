@@ -56,11 +56,8 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-
+    
     steps:
-      - name: 🗂️ Install dependencies
-        run: pnpm i
-
       - name: Checkout repo
         uses: actions/checkout@v3
 
