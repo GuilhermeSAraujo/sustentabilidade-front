@@ -107,11 +107,11 @@ jobs:
           VITE_SUPABASE_API_KEY: ${{ env.VITE_SUPABASE_API_KEY }}
 
       - name: Store variables
-      run: |
-        mkdir sustentabilidade-front
-        cd sustentabilidade-front
-        touch .env
-        echo 'VITE_FIREBASE_API_KEY=${{ secrets.VITE_FIREBASE_API_KEY }}' >> .env
+        run: |
+          mkdir sustentabilidade-front
+          cd sustentabilidade-front
+          touch .env
+          echo 'VITE_FIREBASE_API_KEY=${{ secrets.VITE_FIREBASE_API_KEY }}' >> .env
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
