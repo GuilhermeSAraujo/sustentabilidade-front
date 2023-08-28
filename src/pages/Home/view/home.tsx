@@ -1,32 +1,30 @@
-import { Grid, Box, Typography, Card, CardMedia, CardContent, IconButton } from "@mui/material";
-import { useAuth } from "../../../hooks/useAuth";
+import { Box, Button, Grid, Typography, useTheme } from "@mui/material";
 
+const productsList = [
+  {name: "Arroz Tia Jú", expirationDate: "30/08/2023", image: "https://www.jprembalagemsp.com.br/imagens/embalagem/embalagem-para-arroz-5kg-no-jardim-monte-kemel.jpg"},
+  {name: "Arroz Tia Jú", expirationDate: "30/08/2023", image: "https://www.jprembalagemsp.com.br/imagens/embalagem/embalagem-para-arroz-5kg-no-jardim-monte-kemel.jpg"},
+];
 const Home = () => {
-  const { user } = useAuth();
+  const theme = useTheme();
+
   return (
-    <Grid container>
-      <Grid item xs={12} sx={{backgroundColor: 'lightgrey'}}>
-        <Typography variant='h5'>Produtos mais<br />próximos da validade</Typography>
+    <Grid container justifyContent='space-evenly'>
+      <Grid item xs={12} textAlign='left' sx={{backgroundColor: 'lightgrey'}}>
+        <Typography variant='h5'>Produtos mais<br />próximos do vencimento</Typography>
       </Grid>
-      <Grid item xs={5.5} marginLeft={0.5}>
-        <Card sx={{ display: 'flex', justifyContent: 'space-around', '.MuiCardContent-root': { padding: '10px'} }}>
-          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <CardContent sx={{ flex: '1 0 auto', textAlign: 'center', marginLeft: 1 }}>
-              <Typography component="div" variant="body2">
-                Arroz Tia Jú
-              </Typography>
-              <Typography component="div" variant="body2">
-                Validade: 30/08/2023
-              </Typography>
-            </CardContent>
+      {productsList && productsList.map((product) => (
+        <Grid p={0.5} item xs={5.5} md={3} >
+          <Box p={1} sx={{display: 'flex', backgroundColor: theme.palette.background.paper, borderRadius:'15px'}}>
+            <Box marginRight={0.5} sx={{ flex: 1, alignSelf: 'center'}}>
+              <Typography variant='body2'>{product.name}</Typography>
+              <Typography variant='body1'>{product.expirationDate}</Typography>
+            </Box>
+              <Box component='img' src={product.image} sx={{ flex: 1, maxWidth: '40%', float: 'right', borderRadius: '15px'}} />
           </Box>
-          <CardMedia
-            component="img"
-            sx={{ width: '60%' }}
-            image="https://www.jprembalagemsp.com.br/imagens/embalagem/embalagem-para-arroz-5kg-no-jardim-monte-kemel.jpg"
-            alt="Live from space album cover"
-          />
-        </Card>
+        </Grid>
+      ))}
+      <Grid item xs={12} textAlign='center' marginTop='100%'>
+        <Button variant='contained'>Adicionar mais produtos</Button>
       </Grid>
     </Grid>
   );
