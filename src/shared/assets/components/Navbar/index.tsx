@@ -13,21 +13,31 @@ import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { useAuth } from '../../../../hooks/useAuth';
 
 interface Props {
   window?: () => Window;
 }
 
 const drawerWidth = 240;
-const navItems = ['Meus produtos', 'About', 'Contact'];
+const navItems = [{name: 'Meus produtos', path: '/produtos'}];
 
 const Navbar = (props: Props) => {
+  const history = useNavigate();
+  const { logOut } = useAuth();
+
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
+
+  const handleRedirect = (path: string) => {
+    history(path);
+  }
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
@@ -37,12 +47,17 @@ const Navbar = (props: Props) => {
       <Divider />
       <List>
         {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
+          <ListItem key={item.path} disablePadding>
             <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={item} />
+              <ListItemText onClick={() => handleRedirect(item.path)} primary={item.name} />
             </ListItemButton>
           </ListItem>
         ))}
+        <ListItem disablePadding>
+            <ListItemButton sx={{ textAlign: 'center' }}>
+              <ListItemText onClick={logOut} primary={<LogoutIcon />} />
+            </ListItemButton>
+          </ListItem>
       </List>
     </Box>
   );
@@ -66,16 +81,20 @@ const Navbar = (props: Props) => {
           <Typography
             variant="h6"
             component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, ':hover': { cursor: 'pointer' } }}
+            onClick={() => history('/')}
           >
-            MUI
+            SUSTENTABILIDADE
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
-              <Button key={item} sx={{ color: '#fff' }}>
-                {item}
+              <Button onClick={() => history(item.path)} key={item.path} sx={{ color: '#fff' }}>
+                {item.name}
               </Button>
             ))}
+            <Button onClick={logOut} sx={{ color: '#fff' }}>
+                <LogoutIcon />
+              </Button>
           </Box>
         </Toolbar>
       </AppBar>
