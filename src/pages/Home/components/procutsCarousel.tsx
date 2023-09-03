@@ -76,6 +76,7 @@ const ProductsCarousel = ({ products }: ProductsCarouselProps) => {
                 backgroundColor: theme.palette.background.paper,
                 borderRadius: "15px",
                 boxShadow: "0px 7px 15px 3px rgba(0,0,0,0.25)",
+                height: '100%'
               }}
             >
               <Box marginRight={0.5} sx={{ flex: 1, alignSelf: "center" }}>
