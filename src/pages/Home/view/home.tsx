@@ -1,6 +1,6 @@
-import { Box, Button, Grid, Typography, useTheme } from "@mui/material";
-import ProductsCarousel from "../components/procutsCarousel";
+import { Button, Grid, Typography } from "@mui/material";
 import ExpirationTable from "../components/expirationTable";
+import ProductsCarousel from "../components/procutsCarousel";
 
 const productsList = [
   {
@@ -40,8 +40,6 @@ const productsList = [
   },
 ];
 const Home = () => {
-  const theme = useTheme();
-
   return (
     <Grid container justifyContent="space-evenly">
       <Grid item xs={12} textAlign="center">
