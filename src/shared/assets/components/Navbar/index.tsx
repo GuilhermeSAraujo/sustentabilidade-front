@@ -74,18 +74,20 @@ const Navbar = (props: Props) => {
       <AppBar component="nav">
         <Toolbar sx={{ justifyContent: "right" }}>
           <Box
-            sx={{ display: { xs: 'flex', md: "none" } }}
+            sx={{ display: { xs: "flex", md: "none" } }}
             width="100%"
             justifyContent="space-between"
             alignItems="center"
           >
-            <Typography  sx={{ display: { md: "none" } }} variant="h6">
+            <Typography
+              sx={{ display: { md: "none" }, ":hover": { cursor: "pointer" } }}
+              variant="h6"
+            >
               <Link
                 to="/home"
                 style={{
                   textDecoration: "none",
                   color: "white",
-                  ":hover": { cursor: "pointer" },
                 }}
               >
                 Zero-Waste
@@ -109,9 +111,16 @@ const Navbar = (props: Props) => {
               display: { xs: "none", md: "block" },
               ":hover": { cursor: "pointer" },
             }}
-            onClick={() => history("/")}
           >
-            ZERO-WASTE
+            <Link
+              to="/home"
+              style={{
+                textDecoration: "none",
+                color: "white",
+              }}
+            >
+              ZERO-WASTE
+            </Link>
           </Typography>
           <Box sx={{ display: { xs: "none", md: "block" } }}>
             {navItems.map((item) => (
