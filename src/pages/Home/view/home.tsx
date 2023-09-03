@@ -1,30 +1,60 @@
-import { Box, Button, Grid, Typography, useTheme } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
+import ExpirationTable from "../components/expirationTable";
+import ProductsCarousel from "../components/procutsCarousel";
 
 const productsList = [
-  {name: "Arroz Tia Jú", expirationDate: "30/08/2023", image: "https://www.jprembalagemsp.com.br/imagens/embalagem/embalagem-para-arroz-5kg-no-jardim-monte-kemel.jpg"},
-  {name: "Arroz Tia Jú", expirationDate: "30/08/2023", image: "https://www.jprembalagemsp.com.br/imagens/embalagem/embalagem-para-arroz-5kg-no-jardim-monte-kemel.jpg"},
+  {
+    i: 1,
+    name: "Arroz Tia Jú",
+    expirationDate: "30/08/2023",
+    image:
+      "https://io.convertiez.com.br/m/trimais/shop/products/images/3843/medium/nuggets-de-frango-seara-turma-da-monica-300-g_3803.jpg",
+  },
+  {
+    i: 2,
+    name: "Óleo Liza",
+    expirationDate: "30/08/2023",
+    image:
+      "https://debetti.com.br/cdn/shop/files/ketchup-tomato-heinz.jpg?v=1684260840&width=1080",
+  },
+  {
+    i: 3,
+    name: "Sabão Limpa Cu",
+    expirationDate: "30/08/2023",
+    image:
+      "https://www.jprembalagemsp.com.br/imagens/embalagem/embalagem-para-arroz-5kg-no-jardim-monte-kemel.jpg",
+  },
+  {
+    i: 4,
+    name: "Coca-cola Pênis",
+    expirationDate: "30/08/2023",
+    image:
+      "https://www.jprembalagemsp.com.br/imagens/embalagem/embalagem-para-arroz-5kg-no-jardim-monte-kemel.jpg",
+  },
+  {
+    i: 5,
+    name: "Tesão de vaca",
+    expirationDate: "30/08/2023",
+    image:
+      "https://www.jprembalagemsp.com.br/imagens/embalagem/embalagem-para-arroz-5kg-no-jardim-monte-kemel.jpg",
+  },
 ];
 const Home = () => {
-  const theme = useTheme();
-
   return (
-    <Grid container justifyContent='space-evenly'>
-      <Grid item xs={12} textAlign='left' sx={{backgroundColor: 'lightgrey'}}>
-        <Typography variant='h5'>Produtos mais<br />próximos do vencimento</Typography>
+    <Grid container justifyContent="space-evenly">
+      <Grid item xs={12} textAlign="center">
+        <Typography variant="h6" fontWeight={600} mt={1}>
+          Produtos próximos do vencimento
+        </Typography>
       </Grid>
-      {productsList && productsList.map((product) => (
-        <Grid p={0.5} item xs={5.5} md={3} >
-          <Box p={1} sx={{display: 'flex', backgroundColor: theme.palette.background.paper, borderRadius:'15px'}}>
-            <Box marginRight={0.5} sx={{ flex: 1, alignSelf: 'center'}}>
-              <Typography variant='body2'>{product.name}</Typography>
-              <Typography variant='body1'>{product.expirationDate}</Typography>
-            </Box>
-              <Box component='img' src={product.image} sx={{ flex: 1, maxWidth: '40%', float: 'right', borderRadius: '15px'}} />
-          </Box>
-        </Grid>
-      ))}
-      <Grid item xs={12} textAlign='center' marginTop='100%'>
-        <Button variant='contained'>Adicionar mais produtos</Button>
+      <Grid item xs={12} mt={1}>
+          <ProductsCarousel products={productsList} />
+      </Grid>
+      <Grid item xs={12} mt={8}>
+        <ExpirationTable />
+      </Grid>
+      <Grid item xs={12} textAlign="center" marginTop="25%">
+        <Button variant="contained">Adicionar mais produtos</Button>
       </Grid>
     </Grid>
   );
