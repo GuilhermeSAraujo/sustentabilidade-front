@@ -1,15 +1,14 @@
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import {
   Box,
   Grid,
-  Pagination,
   Stack,
   Typography,
   useMediaQuery,
-  useTheme,
+  useTheme
 } from "@mui/material";
-import { useEffect, useState } from "react";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { useState } from "react";
 
 interface ProductsCarouselProps {
   products: {
@@ -24,7 +23,6 @@ const ProductsCarousel = ({ products }: ProductsCarouselProps) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const [page, setPage] = useState(1);
-  const [containerStyle, setContainerStyle] = useState({});
 
   // Calculate the start and end indices for slicing the products array
   const productsPerPage = isMobile ? 2 : 3;
