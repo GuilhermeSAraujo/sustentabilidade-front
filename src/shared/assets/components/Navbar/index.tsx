@@ -1,3 +1,4 @@
+import LogoutIcon from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -13,8 +14,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
-import LogoutIcon from "@mui/icons-material/Logout";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../../hooks/useAuth";
 
 interface Props {
@@ -73,14 +73,30 @@ const Navbar = (props: Props) => {
       <CssBaseline />
       <AppBar component="nav">
         <Toolbar sx={{ justifyContent: "right" }}>
-          <Box display='flex' width='100%' justifyContent='space-between' alignItems='center'>
-            <Typography variant='h6'>Zero-Waste</Typography>
+          <Box
+            sx={{ display: { xs: 'flex', md: "none" } }}
+            width="100%"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Typography  sx={{ display: { md: "none" } }} variant="h6">
+              <Link
+                to="/home"
+                style={{
+                  textDecoration: "none",
+                  color: "white",
+                  ":hover": { cursor: "pointer" },
+                }}
+              >
+                Zero-Waste
+              </Link>
+            </Typography>
             <IconButton
               color="inherit"
               aria-label="open drawer"
               edge="start"
               onClick={handleDrawerToggle}
-              sx={{ mr: 2, display: { sm: "none" } }}
+              sx={{ mr: 2, display: { md: "none" } }}
             >
               <MenuIcon />
             </IconButton>
@@ -90,14 +106,14 @@ const Navbar = (props: Props) => {
             component="div"
             sx={{
               flexGrow: 1,
-              display: { xs: "none", sm: "block" },
+              display: { xs: "none", md: "block" },
               ":hover": { cursor: "pointer" },
             }}
             onClick={() => history("/")}
           >
             ZERO-WASTE
           </Typography>
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
+          <Box sx={{ display: { xs: "none", md: "block" } }}>
             {navItems.map((item) => (
               <Button
                 onClick={() => history(item.path)}
@@ -123,7 +139,7 @@ const Navbar = (props: Props) => {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: "block", sm: "none" },
+            display: { xs: "block", md: "none" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
