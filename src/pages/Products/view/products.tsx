@@ -5,9 +5,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Box } from '@mui/material';
-import RemoveIcon from '@mui/icons-material/Remove';
-import AddIcon from '@mui/icons-material/Add';
+import { Box, TextField } from '@mui/material';
 
 const produtos = [
   {
@@ -86,7 +84,7 @@ export default function Products() {
               </TableCell>
 
               <TableCell align="right" sx={{ fontSize: '1.2rem', textAlign: 'center', verticalAlign: 'middle' }}>{produto.name}</TableCell>
-              <TableCell align="right" sx={{ fontSize: '1.2rem', textAlign: 'center', verticalAlign: 'middle' }}><Box display="flex" alignItems="center" justifyContent="center"><RemoveIcon /><Box mx={1}>{produto.quantity}</Box><AddIcon /></Box></TableCell>
+              <TableCell align="right" sx={{ fontSize: '1.2rem', textAlign: 'center', verticalAlign: 'middle' }}><Box display="flex" alignItems="center" justifyContent="center"><Box mx={1}>{produto.quantity}</Box></Box></TableCell>
               <TableCell align="right" sx={{ fontSize: '1.2rem', textAlign: 'center', verticalAlign: 'middle' }}>{produto.expirationDate.toLocaleDateString()}</TableCell>
               <TableCell align="right" sx={{ fontSize: '1.2rem', textAlign: 'center', verticalAlign: 'middle' }}>{produto.registrationDate.toLocaleDateString()}</TableCell>
             </TableRow>
