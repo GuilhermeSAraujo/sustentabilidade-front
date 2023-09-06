@@ -1,5 +1,6 @@
-import { Button, Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import ExpirationTable from "../components/expirationTable";
+import ModalAddProduct from "../components/modalAddProduct";
 import ProductsCarousel from "../components/procutsCarousel";
 
 const productsList = [
@@ -48,13 +49,13 @@ const Home = () => {
         </Typography>
       </Grid>
       <Grid item xs={12} mt={1}>
-          <ProductsCarousel products={productsList} />
+        <ProductsCarousel products={productsList} />
       </Grid>
       <Grid item xs={12} mt={8}>
         <ExpirationTable />
       </Grid>
-      <Grid item xs={12} textAlign="center" marginTop={{xs: '25%', md: '5%'}}>
-        <Button variant="contained">Adicionar mais produtos</Button>
+      <Grid item xs={12} textAlign="center" marginTop={{ xs: "25%", md: "5%" }}>
+        <ModalAddProduct />
       </Grid>
     </Grid>
   );

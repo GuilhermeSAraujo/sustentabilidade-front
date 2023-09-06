@@ -48,7 +48,7 @@ const ExpirationTable = () => {
                     <TableCell align="left">{row.protein}</TableCell> */}
                 </TableRow>
                 <TableRow
-                  key={0}
+                  key={1}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
@@ -60,7 +60,7 @@ const ExpirationTable = () => {
                     <TableCell align="left">{row.protein}</TableCell> */}
                 </TableRow>
                 <TableRow
-                  key={0}
+                  key={2}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
