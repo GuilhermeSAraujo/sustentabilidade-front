@@ -53,7 +53,7 @@ const Home = () => {
       <Grid item xs={12} mt={8}>
         <ExpirationTable />
       </Grid>
-      <Grid item xs={12} textAlign="center" marginTop="25%">
+      <Grid item xs={12} textAlign="center" marginTop={{xs: '25%', md: '5%'}}>
         <Button variant="contained">Adicionar mais produtos</Button>
       </Grid>
     </Grid>

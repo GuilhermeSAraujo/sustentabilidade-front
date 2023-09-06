@@ -13,10 +13,8 @@ import {
 
 const ExpirationTable = () => {
   return (
-    <Grid container px={3}>
-      <Grid item xs={12}>
-        {/* <Typography variant="h6" textAlign="left">
-        </Typography> */}
+    <Grid container px={3} justifyContent='center'>
+      <Grid item xs={12} md={6}>
         <Box
           display="flex"
           sx={{ boxShadow: "0px 7px 15px 3px rgba(0,0,0,0.25)" }}
