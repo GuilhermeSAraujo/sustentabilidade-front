@@ -4,8 +4,7 @@ import BarCodeScanner from "./barCodeScanner";
 
 const ModalAddProduct = () => {
   const [modalOpen, setModalOpen] = useState(false);
-  // const [barCodeValue, setBarCodeValue] = useState("");
-
+  
   return (
     <>
       <Modal
@@ -21,7 +20,6 @@ const ModalAddProduct = () => {
               console.log(c);
             }}
             barCodeErrorCallback={(c: any) => {
-              // setBarCodeValue(c);
               console.log(c);
             }}
           />
@@ -44,7 +42,7 @@ const modalStyle = {
   transform: "translate(-50%, -50%)",
   width: 400,
   bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
   p: 4,
+  borderRadius: "10px",
+  boxShadow: "10px 17px 20px 8px rgba(0,0,0,0.25)",
 };

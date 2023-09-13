@@ -10,6 +10,7 @@ const createConfig = () => {
     fps: 10,
     qrbox: 250,
     disableFlip: false,
+    useBarCodeDetectorIfSupported: true
   };
 };
 interface BarCodeScannerProps {
@@ -21,15 +22,10 @@ const BarCodeScanner = ({
   barCodeSuccessCalback,
   barCodeErrorCallback,
 }: BarCodeScannerProps) => {
+
   useEffect(() => {
     // when component mounts
     const config = createConfig();
-
-
-    // Suceess callback is required.
-    if (!barCodeSuccessCalback) {
-      throw "barCodeSuccessCalback is required callback.";
-    }
 
 		const handleSuccess = (decodedText: string) => {
 			barCodeSuccessCalback(decodedText);
@@ -48,6 +44,15 @@ const BarCodeScanner = ({
 
 	
 
+    const openCameraButton = document.getElementById("html5-qrcode-button-camera-permission");
+    const submitImagemLink = document.getElementById("html5-qrcode-anchor-scan-type-change");
+    if(openCameraButton && submitImagemLink){
+      openCameraButton.className = "MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall css-1ra7jo2-MuiButtonBase-root-MuiButton-root";
+      openCameraButton.textContent = "Abrir a câmera";
+      openCameraButton.style.marginBottom = '5%';
+
+      submitImagemLink.textContent = "Scanear através de imagem";
+    }
     // cleanup function when component will unmount
     return () => {
       html5QrcodeScanner.clear().catch((error) => {
