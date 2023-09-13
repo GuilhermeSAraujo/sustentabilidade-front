@@ -4,7 +4,7 @@ import BarCodeScanner from "./barCodeScanner";
 
 const ModalAddProduct = () => {
   const [modalOpen, setModalOpen] = useState(false);
-  // const [barCodeValue, setBarCodeValue] = useState("");
+  const [barCodeValue, setBarCodeValue] = useState("");
 
   return (
     <>
