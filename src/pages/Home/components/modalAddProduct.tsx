@@ -4,7 +4,7 @@ import BarCodeScanner from "./barCodeScanner";
 
 const ModalAddProduct = () => {
   const [modalOpen, setModalOpen] = useState(false);
-  // const [barCodeValue, setBarCodeValue] = useState("");
+  const [barCodeValue, setBarCodeValue] = useState("");
 
   return (
     <>
@@ -17,7 +17,7 @@ const ModalAddProduct = () => {
         <Box sx={modalStyle}>
           <BarCodeScanner
             barCodeSuccessCalback={(c: any) => {
-              // setBarCodeValue(c);
+              setBarCodeValue(c);
               console.log(c);
             }}
             barCodeErrorCallback={(c: any) => {
@@ -27,7 +27,7 @@ const ModalAddProduct = () => {
           />
         </Box>
       </Modal>
-      {/* <p>{barCodeValue}</p> */}
+      <p>{barCodeValue && barCodeValue.length === 13 ? `Seu código de barras é: ${barCodeValue}` : `:///`}</p>
       <Button variant="contained" onClick={() => setModalOpen(true)}>
         Adicionar mais produtos
       </Button>
