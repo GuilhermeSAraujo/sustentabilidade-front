@@ -36,3 +36,5 @@ No terminal do VSCode execute os seguintes comandos:
 
 ### Deploy
 https://dev.to/shashannkbawa/deploying-vite-app-to-github-pages-3ane
+
+:)
