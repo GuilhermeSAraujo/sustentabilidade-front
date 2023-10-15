@@ -40,22 +40,6 @@ const ProductsCarousel = ({ products }: ProductsCarouselProps) => {
     }
   };
 
-  // useEffect(() => {
-  //   const timer1 = setTimeout(() => {
-  // 		if (page < Math.ceil(products.length / productsPerPage)) {
-  // 			handlePageChange(page + 1);
-  //     } else {
-  //       handlePageChange(1);
-  //     }
-  //   }, 3 * 1000);
-
-  //   // this will clear Timeout
-  //   // when component unmount like in willComponentUnmount
-  //   // and show will not change to true
-  //   return () => {
-  //     clearTimeout(timer1);
-  //   };
-  // }, [page]);
 
   return (
     <Grid container sx={{ justifyContent: "space-evenly" }}>

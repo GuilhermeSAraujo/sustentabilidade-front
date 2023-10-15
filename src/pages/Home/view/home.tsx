@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import ExpirationTable from "../components/expirationTable";
 import ModalAddProduct from "../components/modalAddProduct";
 import ProductsCarousel from "../components/procutsCarousel";
@@ -42,22 +42,24 @@ const productsList = [
 ];
 const Home = () => {
   return (
-    <Grid container justifyContent="space-evenly">
-      <Grid item xs={12} textAlign="center">
-        <Typography variant="h6" fontWeight={600} mt={1}>
-          Produtos próximos do vencimento
-        </Typography>
+    <Box sx={{ maxWidth: '800px', display: 'flex', margin: 'auto' }}>
+      <Grid container justifyContent="space-evenly" >
+        <Grid item xs={12} textAlign="center">
+          <Typography variant="h6" fontWeight={600} mt={1}>
+            Produtos próximos do vencimento
+          </Typography>
+        </Grid>
+        <Grid display='flex' item xs={12} mt={1}>
+          <ProductsCarousel products={productsList} />
+        </Grid>
+        <Grid item xs={12} mt={8}>
+          <ExpirationTable />
+        </Grid>
+        <Grid item xs={12} textAlign="center" marginTop={{ xs: "25%", md: "5%" }}>
+          <ModalAddProduct />
+        </Grid>
       </Grid>
-      <Grid item xs={12} mt={1}>
-        <ProductsCarousel products={productsList} />
-      </Grid>
-      <Grid item xs={12} mt={8}>
-        <ExpirationTable />
-      </Grid>
-      <Grid item xs={12} textAlign="center" marginTop={{ xs: "25%", md: "5%" }}>
-        <ModalAddProduct />
-      </Grid>
-    </Grid>
+    </Box>
   );
 };
 
