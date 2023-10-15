@@ -21,18 +21,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const userStorage = localStorage.getItem('user');
-    if(userStorage){
+    if (userStorage) {
       setUser(JSON.parse(userStorage));
     }
-  },[]);
+  }, []);
 
   const login = async ({ email, password }: ILogin) => {
     await signInWithEmailAndPassword(auth, email, password);
     const { data } = await supabase.from('user').select('id, name, email').eq('email', email);
-    if(data && data.length > 0){
+    if (data && data.length > 0) {
       setUser(data[0]);
       localStorage.setItem('user', JSON.stringify(data[0]));
-    }else{
+    } else {
       setUser(null);
     }
   };
