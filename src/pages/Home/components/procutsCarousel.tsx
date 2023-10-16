@@ -1,14 +1,18 @@
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import {
   Box,
   Grid,
-  Stack,
   Typography,
-  useMediaQuery,
   useTheme
 } from "@mui/material";
-import { useState } from "react";
+import "swiper/css";
+// import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+import { register } from 'swiper/element-bundle';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import dayjs from "dayjs";
+import { useEffect, useState } from "react";
+
 
 interface ProductsCarouselProps {
   products: {
@@ -17,98 +21,81 @@ interface ProductsCarouselProps {
     image: string;
   }[];
 }
+register();
 
 const ProductsCarousel = ({ products }: ProductsCarouselProps) => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const [slidesPerView, setSlidePerView] = useState(2);
 
-  const [page, setPage] = useState(1);
+  const daysToExpire = (expirationDate: string): number => {
+    console.log(expirationDate);
+    return dayjs(expirationDate).diff(dayjs(), 'day');
+  }
 
-  // Calculate the start and end indices for slicing the products array
-  const productsPerPage = isMobile ? 2 : 3;
-  const startIdx = (page - 1) * productsPerPage;
-  const endIdx = startIdx + productsPerPage;
-
-  const slicedProducts = products.slice(startIdx, endIdx);
-
-  const handlePageChange = (newPage: number) => {
-    if (
-      newPage >= 1 &&
-      newPage <= Math.ceil(products.length / productsPerPage)
-    ) {
-      setPage(newPage);
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 720) {
+        setSlidePerView(2);
+      } else {
+        setSlidePerView(3);
+      }
     }
-  };
 
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+
+    return () => { window.removeEventListener('resize', handleResize) }
+  }, []);
 
   return (
-    <Grid container sx={{ justifyContent: "space-evenly" }}>
-      <Box
-        display="flex"
-        sx={{
-          justifyContent: "space-evenly",
-        }}
+    <Grid container>
+      <Swiper
+        slidesPerView={slidesPerView}
+        navigation
+        autoplay={{ delay: 5000 }}
+
       >
-        {slicedProducts.map((product, i) => (
-          <Grid item key={i} p={0.5} xs={5.5} md={3}>
-            <Box
-              p={1}
-              sx={{
-                display: "flex",
-                backgroundColor: theme.palette.background.paper,
-                borderRadius: "15px",
-                boxShadow: "0px 7px 15px 3px rgba(0,0,0,0.25)",
-                height: '100%'
-              }}
-            >
-              <Box marginRight={0.5} sx={{ flex: 1, alignSelf: "center" }}>
-                <Typography variant="body2">{product.name}</Typography>
-                <Typography variant="body2">
-                  {product.expirationDate}
-                </Typography>
-              </Box>
+        {products.map((product, i) => (
+          <SwiperSlide key={i}>
+            <Grid item xs={12} textAlign="center" height='80%'>
               <Box
-                component="img"
-                src={product.image}
+                p={1}
                 sx={{
-                  flex: 1,
-                  maxWidth: "40%",
-                  float: "right",
+                  display: "flex",
+                  backgroundColor: theme.palette.background.paper,
                   borderRadius: "15px",
+                  boxShadow: "0px 7px 15px 3px rgba(0,0,0,0.25)",
+                  height: '100%',
+                  margin: {xs: 1, md: 2},
                 }}
-              />
-            </Box>
-          </Grid>
+              >
+                <Box marginRight={0.5} sx={{ flex: 1, alignSelf: "center" }}>
+                  <Typography variant="body1">{product.name}</Typography>
+                  <Typography variant="body1">
+                    <span style={{ color: 'red', fontWeight: 'bold' }}>{daysToExpire(product.expirationDate)}</span> dias para expiração
+                  </Typography>
+                  <Typography variant="body2">
+                    {product.expirationDate}
+                  </Typography>
+                </Box>
+                <Box
+                  component="img"
+                  src={product.image}
+                  sx={{
+                    flex: 1,
+                    maxWidth: "40%",
+                    float: "right",
+                    borderRadius: "15px",
+                  }}
+                />
+              </Box>
+            </Grid>
+          </SwiperSlide>
         ))}
-      </Box>
-      {Math.ceil(products.length / 2) > 1 && (
-        <Box display="flex" pt={1}>
-          <Stack direction="row">
-            <ArrowBackIosIcon
-              onClick={() => handlePageChange(page - 1)}
-              color={
-                page - 1 >= 1 &&
-                page - 1 <= Math.ceil(products.length / productsPerPage)
-                  ? "primary"
-                  : "disabled"
-              }
-              fontSize="small"
-            />
-            <ArrowForwardIosIcon
-              onClick={() => handlePageChange(page + 1)}
-              color={
-                page + 1 >= 1 &&
-                page + 1 <= Math.ceil(products.length / productsPerPage)
-                  ? "primary"
-                  : "disabled"
-              }
-              fontSize="small"
-            />
-          </Stack>
-        </Box>
-      )}
+      </Swiper>
     </Grid>
-  );
+  )
 };
 
 export default ProductsCarousel;
