@@ -6,24 +6,24 @@ import ProductsCarousel from "../components/procutsCarousel";
 const productsList = [
   {
     i: 1,
-    name: "Arroz Tia Jú",
+    name: "Noget Seara",
     expirationDate: "01/01/2024",
     image:
       "https://io.convertiez.com.br/m/trimais/shop/products/images/3843/medium/nuggets-de-frango-seara-turma-da-monica-300-g_3803.jpg",
   },
   {
     i: 2,
-    name: "Óleo Liza",
+    name: "Ketchup Heiz",
     expirationDate: "01/01/2024",
     image:
       "https://debetti.com.br/cdn/shop/files/ketchup-tomato-heinz.jpg?v=1684260840&width=1080",
   },
   {
     i: 3,
-    name: "Sabão Limpa Cu",
+    name: "Isabela com Ovos",
     expirationDate: "01/01/2024",
     image:
-      "https://www.jprembalagemsp.com.br/imagens/embalagem/embalagem-para-arroz-5kg-no-jardim-monte-kemel.jpg",
+      "https://isabela.com.br/wp-content/uploads/2020/12/macarrao.png",
   },
   {
     i: 4,

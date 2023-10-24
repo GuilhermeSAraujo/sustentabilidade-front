@@ -71,7 +71,7 @@ const ProductsCarousel = ({ products }: ProductsCarouselProps) => {
                 }}
               >
                 <Box marginRight={0.5} sx={{ flex: 1, alignSelf: "center" }}>
-                  <Typography variant="body1">{product.name}</Typography>
+                  <Typography variant="body1" fontWeight={600}>{product.name}</Typography>
                   <Typography variant="body1">
                     <span style={{ color: 'red', fontWeight: 'bold' }}>{daysToExpire(product.expirationDate)}</span> dias para expiração
                   </Typography>

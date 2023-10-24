@@ -41,7 +41,7 @@ const ExpirationTable = () => {
                     Próximo do vencimento
                   </TableCell>
                   <TableCell align="left" sx={{ backgroundColor: "#ffb2ae" }}>
-                    3 produtos
+                    <span style={{fontWeight: 'bold'}} >3</span> produtos
                   </TableCell>
                   {/* <TableCell align="left">{row.fat}</TableCell>
                     <TableCell align="left">{row.carbs}</TableCell>
@@ -54,7 +54,7 @@ const ExpirationTable = () => {
                   <TableCell component="th" scope="row">
                     Médio do vencimento
                   </TableCell>
-                  <TableCell align="left">1 produto</TableCell>
+                  <TableCell align="left"><span style={{fontWeight: 'bold'}} >1</span> produto</TableCell>
                   {/* <TableCell align="left">{row.fat}</TableCell>
                     <TableCell align="left">{row.carbs}</TableCell>
                     <TableCell align="left">{row.protein}</TableCell> */}
@@ -66,7 +66,7 @@ const ExpirationTable = () => {
                   <TableCell component="th" scope="row">
                     Distante do vencimento
                   </TableCell>
-                  <TableCell align="left">5 produtos</TableCell>
+                  <TableCell align="left"><span style={{fontWeight: 'bold'}} >5</span> produtos</TableCell>
                   {/* <TableCell align="left">{row.fat}</TableCell>
                     <TableCell align="left">{row.carbs}</TableCell>
                     <TableCell align="left">{row.protein}</TableCell> */}
