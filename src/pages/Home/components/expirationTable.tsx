@@ -1,77 +1,77 @@
 import {
-    Box,
-    Grid,
-    Paper,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Typography
+  Box,
+  Grid,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
 } from "@mui/material";
+import { DataGrid } from '@mui/x-data-grid';
 
+const other = {
+  autoHeight: true,
+  showCellVerticalBorder: true,
+  showColumnVerticalBorder: true,
+};
+
+const rows = [
+  { id: 1, username: '@MUI', age: 20 },
+  { id: 2, username: '@MUI-X', age: 25 },
+];
 const ExpirationTable = () => {
   return (
-    <Grid container px={3} justifyContent='center'>
-      <Grid item xs={12} md={6}>
+    <Grid container px={3} justifyContent="center">
+      <Grid item xs={12} md={7}>
         <Box
           display="flex"
           sx={{ boxShadow: "0px 7px 15px 3px rgba(0,0,0,0.25)" }}
         >
           <TableContainer component={Paper}>
-            <Table sx={{ maxWidth: 650 }} aria-label="simple table">
+            <Table sx={{ maxWidth: 900 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>
+                  <TableCell colSpan={2}>
                     <Typography variant="body2" fontWeight={600}>
-                      Atualmente você possui
+                      Atualmente você possui produtos que expiram:
                     </Typography>
                   </TableCell>
-                  <TableCell></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {/* {rows.map((row) => ( */}
                 <TableRow
-                  key={0}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    Próximo do vencimento
+                    Em até 1 semana
                   </TableCell>
                   <TableCell align="left" sx={{ backgroundColor: "#ffb2ae" }}>
-                    <span style={{fontWeight: 'bold'}} >3</span> produtos
+                    <span style={{ fontWeight: "bold" }}>3</span> produtos
                   </TableCell>
-                  {/* <TableCell align="left">{row.fat}</TableCell>
-                    <TableCell align="left">{row.carbs}</TableCell>
-                    <TableCell align="left">{row.protein}</TableCell> */}
                 </TableRow>
                 <TableRow
-                  key={1}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    Médio do vencimento
+                    Entre 7 à 15 dias
                   </TableCell>
-                  <TableCell align="left"><span style={{fontWeight: 'bold'}} >1</span> produto</TableCell>
-                  {/* <TableCell align="left">{row.fat}</TableCell>
-                    <TableCell align="left">{row.carbs}</TableCell>
-                    <TableCell align="left">{row.protein}</TableCell> */}
+                  <TableCell align="left">
+                    <span style={{ fontWeight: "bold" }}>1</span> produto
+                  </TableCell>
                 </TableRow>
                 <TableRow
-                  key={2}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    Distante do vencimento
+                    Em mais de 15 dias
                   </TableCell>
-                  <TableCell align="left"><span style={{fontWeight: 'bold'}} >5</span> produtos</TableCell>
-                  {/* <TableCell align="left">{row.fat}</TableCell>
-                    <TableCell align="left">{row.carbs}</TableCell>
-                    <TableCell align="left">{row.protein}</TableCell> */}
+                  <TableCell align="left">
+                    <span style={{ fontWeight: "bold" }}>5</span> produtos
+                  </TableCell>
                 </TableRow>
-                {/* ))} */}
               </TableBody>
             </Table>
           </TableContainer>

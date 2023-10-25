@@ -10,7 +10,7 @@ const createConfig = () => {
     fps: 10,
     qrbox: 250,
     disableFlip: false,
-    useBarCodeDetectorIfSupported: true
+    useBarCodeDetectorIfSupported: true,
   };
 };
 interface BarCodeScannerProps {
@@ -22,45 +22,46 @@ const BarCodeScanner = ({
   barCodeSuccessCalback,
   barCodeErrorCallback,
 }: BarCodeScannerProps) => {
-
   useEffect(() => {
     // when component mounts
     const config = createConfig();
-
-		const handleSuccess = (decodedText: string) => {
-			barCodeSuccessCalback(decodedText);
-			html5QrcodeScanner.clear();
-		}
-
+  
+    const handleSuccess = (decodedText: string) => {
+      barCodeSuccessCalback(decodedText);
+      html5QrcodeScanner.clear();
+    };
+  
     const html5QrcodeScanner = new Html5QrcodeScanner(
       qrcodeRegionId,
       config,
       undefined
     );
-    html5QrcodeScanner.render(
-      handleSuccess,
-      barCodeErrorCallback
-    );
-
-	
-
-    const openCameraButton = document.getElementById("html5-qrcode-button-camera-permission");
-    const submitImagemLink = document.getElementById("html5-qrcode-anchor-scan-type-change");
-    if(openCameraButton && submitImagemLink){
-      openCameraButton.className = "MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall css-1ra7jo2-MuiButtonBase-root-MuiButton-root";
-      openCameraButton.textContent = "Abrir a câmera";
-      openCameraButton.style.marginBottom = '5%';
-
-      submitImagemLink.textContent = "Scanear através de imagem";
-    }
+    html5QrcodeScanner.render(handleSuccess, barCodeErrorCallback);
+  
+    // setTimeout(() => {
+      const openCameraButton = document.getElementById("html5-qrcode-button-camera-start");
+      const submitImagemLink = document.getElementById(
+        "html5-qrcode-anchor-scan-type-change"
+        );
+        console.log('openCameraButton', openCameraButton, 'submitImagemLink', submitImagemLink);
+      if (openCameraButton && submitImagemLink) {
+        openCameraButton.className =
+          "MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall css-1ra7jo2-MuiButtonBase-root-MuiButton-root";
+        openCameraButton.textContent = "Abrir a câmera";
+        openCameraButton.style.marginBottom = "5%";
+  
+        submitImagemLink.textContent = "Scanear através de imagem";
+      }
+    // }, 100); // Ajuste o tempo de espera conforme necessário
+  
     // cleanup function when component will unmount
     return () => {
       html5QrcodeScanner.clear().catch((error) => {
         console.error("Failed to clear html5QrcodeScanner. ", error);
       });
     };
-  }, []);
-
+  }, [barCodeErrorCallback, barCodeSuccessCalback]);
+  
   return <div id={qrcodeRegionId} />;
 };
 
