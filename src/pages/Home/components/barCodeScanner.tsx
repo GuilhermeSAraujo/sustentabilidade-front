@@ -1,68 +1,82 @@
-// file = Html5QrcodePlugin.jsx
-import { Html5QrcodeScanner } from "html5-qrcode";
-import { useEffect } from "react";
+import Quagga from "quagga";
+import { useEffect, useState } from "react";
+const BarcodeScanner = () => {
 
-const qrcodeRegionId = "html5qr-code-full-region";
-
-// Creates the configuration object for Html5QrcodeScanner.
-const createConfig = () => {
-  return {
-    fps: 10,
-    qrbox: 250,
-    disableFlip: false,
-    useBarCodeDetectorIfSupported: true,
-  };
-};
-interface BarCodeScannerProps {
-  barCodeSuccessCalback: (input: string) => void;
-  barCodeErrorCallback: (input: any) => void;
-}
-
-const BarCodeScanner = ({
-  barCodeSuccessCalback,
-  barCodeErrorCallback,
-}: BarCodeScannerProps) => {
-  useEffect(() => {
-    // when component mounts
-    const config = createConfig();
-  
-    const handleSuccess = (decodedText: string) => {
-      barCodeSuccessCalback(decodedText);
-      html5QrcodeScanner.clear();
+    const [isInitialised, setIsInitialised] = useState(false);
+    const onDetected = (obj : unknown) => {
+        window.alert(obj);
     };
-  
-    const html5QrcodeScanner = new Html5QrcodeScanner(
-      qrcodeRegionId,
-      config,
-      undefined
-    );
-    html5QrcodeScanner.render(handleSuccess, barCodeErrorCallback);
-  
-    // setTimeout(() => {
-      const openCameraButton = document.getElementById("html5-qrcode-button-camera-start");
-      const submitImagemLink = document.getElementById(
-        "html5-qrcode-anchor-scan-type-change"
-        );
-        console.log('openCameraButton', openCameraButton, 'submitImagemLink', submitImagemLink);
-      if (openCameraButton && submitImagemLink) {
-        openCameraButton.className =
-          "MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall css-1ra7jo2-MuiButtonBase-root-MuiButton-root";
-        openCameraButton.textContent = "Abrir a câmera";
-        openCameraButton.style.marginBottom = "5%";
-  
-        submitImagemLink.textContent = "Scanear através de imagem";
-      }
-    // }, 100); // Ajuste o tempo de espera conforme necessário
-  
-    // cleanup function when component will unmount
-    return () => {
-      html5QrcodeScanner.clear().catch((error) => {
-        console.error("Failed to clear html5QrcodeScanner. ", error);
+    useEffect(() => {
+      Quagga.init(
+        {
+          inputStream: {
+            type: "LiveStream",
+            constraints: {
+              width: 640,
+              height: 320,
+              facingMode: "environment",
+            },
+            // area: { // defines rectangle of the detection/localization area
+            //   top: "10%",    // top offset
+            //   right: "10%",  // right offset
+            //   left: "10%",   // left offset
+            //   bottom: "10%"  // bottom offset
+            // },
+          },
+          locator: {
+            halfSample: true,
+            patchSize: "large", // x-small, small, medium, large, x-large
+            debug: {
+              showCanvas: true,
+              showPatches: false,
+              showFoundPatches: false,
+              showSkeleton: false,
+              showLabels: false,
+              showPatchLabels: false,
+              showRemainingPatchLabels: false,
+              boxFromPatches: {
+                showTransformed: true,
+                showTransformedBox: true,
+                showBB: true,
+              },
+            },
+          },
+          numOfWorkers: 4,
+          decoder: {
+            readers: ["code_128_reader"],
+            debug: {
+              drawBoundingBox: true,
+              showFrequency: true,
+              drawScanline: true,
+              showPattern: true,
+            },
+          },
+          locate: true,
+        },
+        (err : unknown) => {
+          if (err) {
+            console.log(err);
+            return;
+          }
+          Quagga.start();
+          setIsInitialised(true);
+        }
+      );
+   
+      Quagga.onDetected((result : unknown) => {
+        onDetected(result);
       });
-    };
-  }, [barCodeErrorCallback, barCodeSuccessCalback]);
-  
-  return <div id={qrcodeRegionId} />;
+   
+      return () => {
+        Quagga.offDetected((result: unknown) => {
+          onDetected(result);
+        });
+      };
+    }, [onDetected]);
+   
+    return isInitialised ? (
+      <div id="interactive" className="viewport" />
+    ) : null;
 };
 
-export default BarCodeScanner;
+export default BarcodeScanner;

@@ -28,7 +28,6 @@ const ProductsCarousel = ({ products }: ProductsCarouselProps) => {
   const [slidesPerView, setSlidePerView] = useState(2);
 
   const daysToExpire = (expirationDate: string): number => {
-    console.log(expirationDate);
     return dayjs(expirationDate).diff(dayjs(), 'day');
   }
 

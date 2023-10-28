@@ -1,10 +1,10 @@
 import { Box, Button, Modal } from "@mui/material";
 import { useState } from "react";
-import BarCodeScanner from "./barCodeScanner";
+import BarcodeScanner from "./barCodeScanner";
 
 const ModalAddProduct = () => {
   const [modalOpen, setModalOpen] = useState(false);
-  const [barCodeValue, setBarCodeValue] = useState("");
+
 
   return (
     <>
@@ -15,18 +15,10 @@ const ModalAddProduct = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={modalStyle}>
-          <BarCodeScanner
-            barCodeSuccessCalback={(c: any) => {
-              setBarCodeValue(c);
-              console.log(c);
-            }}
-            barCodeErrorCallback={(c: any) => {
-              console.log(c);
-            }}
-          />
+        <h6>Leitor de Código de Barras</h6>
+        <BarcodeScanner />
         </Box>
       </Modal>
-      <p>{barCodeValue && barCodeValue.length === 13 ? `Seu código de barras é: ${barCodeValue}` : `:///`}</p>
       <Button variant="contained" onClick={() => setModalOpen(true)}>
         Adicionar mais produtos
       </Button>

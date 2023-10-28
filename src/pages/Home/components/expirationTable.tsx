@@ -10,18 +10,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { DataGrid } from '@mui/x-data-grid';
 
-const other = {
-  autoHeight: true,
-  showCellVerticalBorder: true,
-  showColumnVerticalBorder: true,
-};
-
-const rows = [
-  { id: 1, username: '@MUI', age: 20 },
-  { id: 2, username: '@MUI-X', age: 25 },
-];
 const ExpirationTable = () => {
   return (
     <Grid container px={3} justifyContent="center">
