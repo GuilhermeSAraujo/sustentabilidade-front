@@ -1,7 +1,8 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import ExpirationTable from "../components/expirationTable";
 import ModalAddProduct from "../components/modalAddProduct";
 import ProductsCarousel from "../components/procutsCarousel";
+import { useState } from "react";
 
 const productsList = [
   {
@@ -22,8 +23,7 @@ const productsList = [
     i: 3,
     name: "Isabela com Ovos",
     expirationDate: "01/01/2024",
-    image:
-      "https://isabela.com.br/wp-content/uploads/2020/12/macarrao.png",
+    image: "https://isabela.com.br/wp-content/uploads/2020/12/macarrao.png",
   },
   {
     i: 4,
@@ -41,9 +41,11 @@ const productsList = [
   },
 ];
 const Home = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
-    <Box sx={{ maxWidth: '800px', display: 'flex', margin: 'auto' }}>
-      <Grid container justifyContent="space-evenly" >
+    <Box sx={{ maxWidth: "800px", display: "flex", margin: "auto" }}>
+      <Grid container justifyContent="space-evenly">
         <Grid item xs={12} textAlign="center">
           <Typography variant="h6" fontWeight={600} mt={1}>
             Produtos próximos do vencimento
@@ -55,8 +57,16 @@ const Home = () => {
         <Grid item xs={12} mt={8}>
           <ExpirationTable />
         </Grid>
-        <Grid item xs={12} textAlign="center" marginTop={{ xs: "25%", md: "5%" }}>
-          <ModalAddProduct />
+        <Grid
+          item
+          xs={12}
+          textAlign="center"
+          marginTop={{ xs: "25%", md: "5%" }}
+        >
+          <ModalAddProduct modalOpen={modalOpen} setModalOpen={setModalOpen} />
+          <Button variant="contained" onClick={() => setModalOpen(true)}>
+            Adicionar mais produtos
+          </Button>
         </Grid>
       </Grid>
     </Box>

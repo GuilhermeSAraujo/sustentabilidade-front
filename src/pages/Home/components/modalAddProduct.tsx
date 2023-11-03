@@ -1,15 +1,21 @@
-import { Box, Button, Modal } from "@mui/material";
-import { useState } from "react";
-import BarcodeScanner from "./barCodeScanner";
+import { Box, Modal, Typography } from "@mui/material";
 import { QrcodeResult } from "html5-qrcode/esm/core";
+import { useState } from "react";
+import { AddProductsSteps } from "../../../shared/enum/addProcutsSteps";
+import BarcodeScanner from "./barCodeScanner";
+import ProductDetails from "./productDetails";
 
-const ModalAddProduct = () => {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [barcode, setBarcode] = useState('');
-
-  const handleSuccessScan = (result : QrcodeResult) => {
+interface ModalAddProductProps {
+  modalOpen: boolean;
+  setModalOpen: (value: boolean) => void;
+}
+const ModalAddProduct = ({ modalOpen, setModalOpen }: ModalAddProductProps) => {
+  const [step, setStep] = useState(AddProductsSteps.ProductDetails);
+  const [barcode, setBarcode] = useState("");
+  
+  const handleSuccessScan = (result: QrcodeResult) => {
     setBarcode(result.text);
-    setModalOpen(false);
+    setStep(AddProductsSteps.ProductDetails);
   };
 
   return (
@@ -20,16 +26,24 @@ const ModalAddProduct = () => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={modalStyle}>
-          <h6>Leitor de Código de Barras</h6>
-          <h6>Valor do código de barras: {barcode}</h6>
-          <BarcodeScanner onResult={handleSuccessScan}
-          onError={(result) => setBarcode(result.errorMessage)} />
-        </Box>
+        <>
+          {step === AddProductsSteps.BarcodeScan && (
+            <Box sx={modalStyle}>
+              <Typography variant="body1">
+                Leitor de Código de Barras
+              </Typography>
+              <Typography variant="body2">
+                Valor do código de barras: {barcode}
+              </Typography>
+              <BarcodeScanner
+                onResult={handleSuccessScan}
+                onError={(result) => setBarcode(result.errorMessage)}
+              />
+            </Box>
+          )}
+          {step === AddProductsSteps.ProductDetails && <ProductDetails />}
+        </>
       </Modal>
-      <Button variant="contained" onClick={() => setModalOpen(true)}>
-        Adicionar mais produtos
-      </Button>
     </>
   );
 };
@@ -43,7 +57,7 @@ const modalStyle = {
   transform: "translate(-50%, -50%)",
   width: 400,
   bgcolor: "background.paper",
-  p: 4,
+  p: 2.5,
   borderRadius: "10px",
   boxShadow: "10px 17px 20px 8px rgba(0,0,0,0.25)",
 };

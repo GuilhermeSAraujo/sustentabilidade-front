@@ -6,9 +6,11 @@ import { Alert, Box, IconButton, TextField, Typography, useTheme } from "@mui/ma
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import * as Yup from "yup";
 import { useAuth } from "../../../hooks/useAuth";
 import { IFSignUp } from "../../../models/user";
+import { signUpFormSchema } from "../../../shared/utils/formUtils";
+
+
 
 const SignUp = () => {
   const history = useNavigate(); 
@@ -18,18 +20,6 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const formSchema = Yup.object().shape({
-    name: Yup.string().required("Campo obrigatório"),
-    email: Yup.string()
-      .email("Por favor, insira um e-mail válido")
-      .required("Email é obrigatório"),
-    password: Yup.string()
-      .required("Campo obrigatório")
-      .min(3, "Password must be at 3 char long"),
-    passwordConfirm: Yup.string()
-      .required("Campo obrigatório")
-      .oneOf([Yup.ref("password")], "As senhas não coincidem"),
-  });
 
   const {
     register,
@@ -37,7 +27,7 @@ const SignUp = () => {
     formState: { isValid, errors },
   } = useForm<IFSignUp>({
     mode: "onBlur",
-    resolver: yupResolver(formSchema),
+    resolver: yupResolver(signUpFormSchema),
   });
 
   const submitForm = handleSubmit(async (data) => {

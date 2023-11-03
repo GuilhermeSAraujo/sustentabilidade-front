@@ -1,6 +1,6 @@
-import { Html5Qrcode } from 'html5-qrcode';
-import { Html5QrcodeError, QrcodeResult } from 'html5-qrcode/esm/core';
-import { useEffect, useRef } from 'react';
+import { Html5Qrcode } from "html5-qrcode";
+import { Html5QrcodeError, QrcodeResult } from "html5-qrcode/esm/core";
+import { useEffect, useRef } from "react";
 
 // const qrcodeRegionId = "html5qr-code-full-region";
 
@@ -8,9 +8,9 @@ interface BarcodeScannerProps {
   onResult: (result: QrcodeResult) => void;
   onError: (error: Html5QrcodeError) => void;
 }
-export const BarcodeScanner = ({onResult, onError} : BarcodeScannerProps) => {
+export const BarcodeScanner = ({ onResult, onError }: BarcodeScannerProps) => {
   const previewRef = useRef<HTMLDivElement>(null);
-  
+
   const memoizedResultHandler = useRef(onResult);
   const memoizedErrorHandler = useRef(onError);
 
@@ -27,7 +27,7 @@ export const BarcodeScanner = ({onResult, onError} : BarcodeScannerProps) => {
     const html5QrcodeScanner = new Html5Qrcode(previewRef.current.id);
     const didStart = html5QrcodeScanner
       .start(
-        { facingMode: { exact: "environment" } },
+        { facingMode: "environment"  },
         { fps: 10 },
         (_, { result }) => {
           memoizedResultHandler.current(result);
@@ -41,17 +41,12 @@ export const BarcodeScanner = ({onResult, onError} : BarcodeScannerProps) => {
       didStart
         .then(() => html5QrcodeScanner.stop())
         .catch(() => {
-          console.log('Error stopping scanner');
+          console.log("Error stopping scanner");
         });
     };
   }, [previewRef, memoizedResultHandler, memoizedErrorHandler]);
 
-  return (
-    <div
-      id="preview"
-      ref={previewRef}
-    />
-  );
+  return <div id="preview" ref={previewRef} />;
 };
 
 export default BarcodeScanner;
