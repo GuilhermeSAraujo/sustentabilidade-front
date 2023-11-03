@@ -10,7 +10,7 @@ interface ModalAddProductProps {
   setModalOpen: (value: boolean) => void;
 }
 const ModalAddProduct = ({ modalOpen, setModalOpen }: ModalAddProductProps) => {
-  const [step, setStep] = useState(AddProductsSteps.ProductDetails);
+  const [step, setStep] = useState(AddProductsSteps.BarcodeScan);
   const [barcode, setBarcode] = useState("");
   
   const handleSuccessScan = (result: QrcodeResult) => {
