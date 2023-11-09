@@ -1,19 +1,24 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
-    Box,
-    Button,
-    CircularProgress,
-    Grid,
-    TextField,
-    Typography,
+  Box,
+  Button,
+  CircularProgress,
+  Grid,
+  TextField,
+  Typography,
 } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { IFAddProduct } from "../../../models/product";
 import {
-    addProductFormSchema
+  addProductFormSchema
 } from "../../../shared/utils/formUtils";
-const ProductDetails = () => {
+
+interface ProductDetailsProps {
+  barcode: string;
+}
+
+const ProductDetails = ({ barcode } : ProductDetailsProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -26,18 +31,15 @@ const ProductDetails = () => {
   });
 
   const submitForm = handleSubmit(async (data) => {
-    if(isValid){
-
-        try {
-            setIsLoading(true);
-            console.log(data);
-            setIsLoading(false);
-        } catch (err) {
-            console.log(err);
-        } finally {
-            setIsLoading(false);
-        }
-    }
+      try {
+        setIsLoading(true);
+        console.log(data);
+        setIsLoading(false);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setIsLoading(false);
+      }
   });
 
   return (
@@ -49,6 +51,14 @@ const ProductDetails = () => {
           </Typography>
         </Grid>
         <form onSubmit={submitForm}>
+        <Grid item xs={12} textAlign="center" pb={2}>
+            <TextField
+              label="Código de barras"
+              variant="outlined"
+              value={barcode}
+              {...register("barcode")}
+            />
+          </Grid>
           <Grid item xs={12} textAlign="center" pb={2}>
             <TextField
               label="Nome do produto"
@@ -85,7 +95,7 @@ const ProductDetails = () => {
             {isLoading ? (
               <CircularProgress size="30px" />
             ) : (
-              <Button variant="contained" type="submit">
+              <Button variant="contained" type="submit" disabled={!isValid} >
                 Adicionar produto
               </Button>
             )}

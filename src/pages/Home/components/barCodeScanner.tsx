@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import { Html5Qrcode } from "html5-qrcode";
 import { Html5QrcodeError, QrcodeResult } from "html5-qrcode/esm/core";
 import { useEffect, useRef } from "react";
@@ -9,6 +10,8 @@ interface BarcodeScannerProps {
   onError: (error: Html5QrcodeError) => void;
 }
 export const BarcodeScanner = ({ onResult, onError }: BarcodeScannerProps) => {
+  const isMobile = useMediaQuery("(max-width: 600px)");
+
   const previewRef = useRef<HTMLDivElement>(null);
 
   const memoizedResultHandler = useRef(onResult);
@@ -27,7 +30,7 @@ export const BarcodeScanner = ({ onResult, onError }: BarcodeScannerProps) => {
     const html5QrcodeScanner = new Html5Qrcode(previewRef.current.id);
     const didStart = html5QrcodeScanner
       .start(
-        { facingMode: "environment"  },
+        { facingMode: isMobile ? { exact: "environment" } : "environment" },
         { fps: 10 },
         (_, { result }) => {
           memoizedResultHandler.current(result);

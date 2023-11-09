@@ -12,7 +12,7 @@ interface ModalAddProductProps {
 const ModalAddProduct = ({ modalOpen, setModalOpen }: ModalAddProductProps) => {
   const [step, setStep] = useState(AddProductsSteps.BarcodeScan);
   const [barcode, setBarcode] = useState("");
-  
+
   const handleSuccessScan = (result: QrcodeResult) => {
     setBarcode(result.text);
     setStep(AddProductsSteps.ProductDetails);
@@ -23,8 +23,6 @@ const ModalAddProduct = ({ modalOpen, setModalOpen }: ModalAddProductProps) => {
       <Modal
         open={modalOpen}
         onClose={() => setModalOpen(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
       >
         <>
           {step === AddProductsSteps.BarcodeScan && (
@@ -41,7 +39,7 @@ const ModalAddProduct = ({ modalOpen, setModalOpen }: ModalAddProductProps) => {
               />
             </Box>
           )}
-          {step === AddProductsSteps.ProductDetails && <ProductDetails />}
+          {step === AddProductsSteps.ProductDetails && barcode.length > 0 && <ProductDetails barcode={barcode} />}
         </>
       </Modal>
     </>
