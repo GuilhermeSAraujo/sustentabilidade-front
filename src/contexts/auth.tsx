@@ -1,11 +1,12 @@
-import { signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from "firebase/auth";
+import { signOut } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import { auth } from "../firebase/firebase-config";
-import { ILogin, ISignUp, User } from "../models/user";
+import { ISignIn, ISignUp, User } from "../models/user";
+import UserService from "../shared/api/userService";
 
 interface AuthContextData {
   signed: boolean;
-  login({ email, password }: ILogin): Promise<void>;
+  login({ email, password }: ISignIn): Promise<void>;
   signUp({ email, password }: ISignUp): Promise<void>;
   logOut(): Promise<void>;
   user: User | null;
@@ -25,18 +26,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, []);
 
-  const login = async ({ email, password }: ILogin) => {
-    await signInWithEmailAndPassword(auth, email, password);
-    setUser({ email });
-    localStorage.setItem('user', JSON.stringify({ email }));
+  const login = async (data: ISignIn) => {
+    await UserService.auth(data);
+    const user = { email: data.email, birthDate: '', document: '', name: '' };
+    setUser(user);
+    localStorage.setItem('user', JSON.stringify(user));
   };
 
-  const signUp = async ({ email, password }: ISignUp) => {
-    await createUserWithEmailAndPassword(auth, email, password);
+  const signUp = async (data: ISignUp) => {
+    await UserService.create(data);
   };
 
   const logOut = async () => {
     await signOut(auth);
+    localStorage.removeItem('user');
     setUser(null);
   };
 
