@@ -4,19 +4,19 @@ import NaturePeopleIcon from '@mui/icons-material/NaturePeople';
 import { LoadingButton } from "@mui/lab";
 import { Alert, Box, IconButton, TextField, Typography, useTheme } from "@mui/material";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
 import { IFSignUp } from "../../../models/user";
-import { signUpFormSchema } from "../../../shared/utils/formUtils";
+import { birthdateMask, cpfMask, sanitizeSignUp, signUpFormSchema } from "../../../shared/utils/formUtils";
 
 
 
 const SignUp = () => {
-  const history = useNavigate(); 
+  const history = useNavigate();
   const theme = useTheme();
   const { signUp } = useAuth();
-  
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
@@ -24,16 +24,21 @@ const SignUp = () => {
   const {
     register,
     handleSubmit,
+    control,
     formState: { isValid, errors },
   } = useForm<IFSignUp>({
     mode: "onBlur",
     resolver: yupResolver(signUpFormSchema),
+    defaultValues: { document: '', birthDate: '' }
   });
 
   const submitForm = handleSubmit(async (data) => {
+    console.log(data);
     try {
       setLoading(true);
-      await signUp({ name: data.name, email: data.email, password: data.passwordConfirm });
+      const inputs = sanitizeSignUp(data);
+      console.log(inputs);
+      await signUp(inputs);
       history('/singIn');
       setLoading(false);
     } catch (err) {
@@ -72,10 +77,10 @@ const SignUp = () => {
           </Alert>
         </Box>
       )}
-      <Box sx={{textAlign: 'center', paddingTop:{xs: 3}}} >
+      <Box sx={{ textAlign: 'center', paddingTop: { xs: 3 } }} >
         <NaturePeopleIcon fontSize="large" />
       </Box>
-      <Box sx={{textAlign: 'center'}} pb={3}>
+      <Box sx={{ textAlign: 'center' }} pb={3}>
         <Typography variant="h4" fontWeight={500} sx={{ textAlign: "center" }}>Mudando o mundo, um passo sustentável de cada vez</Typography>
       </Box>
       <Box
@@ -108,6 +113,36 @@ const SignUp = () => {
               helperText={errors.name?.message}
               {...register("name")}
               fullWidth
+            />
+            <Controller
+              name="document"
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <TextField
+                  onChange={(e) => onChange(cpfMask(e.target.value))}
+                  value={value}
+                  label="CPF"
+                  fullWidth
+                  required
+                  error={Boolean(errors.document)}
+                  helperText={errors.document?.message}
+                />
+              )}
+            />
+            <Controller
+              name="birthDate"
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <TextField
+                  onChange={(e) => onChange(birthdateMask(e.target.value))}
+                  value={value}
+                  label="Data de nascimento"
+                  fullWidth
+                  required
+                  error={Boolean(errors.birthDate)}
+                  helperText={errors.birthDate?.message}
+                />
+              )}
             />
             <TextField
               label="E-mail"
