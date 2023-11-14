@@ -1,7 +1,7 @@
 export interface IFSignUp{
 	name: string;
 	document: string;
-	birthDate: string;
+	birthdate: string;
 	email: string;
 	password: string;
 	passwordConfirm: string;
@@ -20,7 +20,7 @@ export interface ISignIn{
 export interface ISignUp{
 	name: string;
 	document: string;
-	birthDate: string;
+	birthdate: string;
 	email: string;
 	password: string;
 }
@@ -28,6 +28,13 @@ export interface ISignUp{
 export interface User{
 	name: string;
 	document: string;
-	birthDate: string;
+	birthdate: string;
 	email: string;
+}
+
+export interface UserGetResult{
+	id: string;
+	name: string;
+	email: string;
+	token: string;
 }

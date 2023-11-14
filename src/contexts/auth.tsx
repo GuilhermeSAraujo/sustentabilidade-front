@@ -1,7 +1,7 @@
 import { signOut } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import { auth } from "../firebase/firebase-config";
-import { ISignIn, ISignUp, User } from "../models/user";
+import { ISignIn, ISignUp, UserGetResult } from "../models/user";
 import UserService from "../shared/api/userService";
 
 interface AuthContextData {
@@ -9,7 +9,8 @@ interface AuthContextData {
   login({ email, password }: ISignIn): Promise<void>;
   signUp({ email, password }: ISignUp): Promise<void>;
   logOut(): Promise<void>;
-  user: User | null;
+  user: UserGetResult | null;
+  getToken(): Promise<string>;
 }
 
 export const AuthContext = createContext<AuthContextData>(
@@ -17,7 +18,7 @@ export const AuthContext = createContext<AuthContextData>(
 );
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserGetResult | null>(null);
 
   useEffect(() => {
     const userStorage = localStorage.getItem('user');
@@ -27,8 +28,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const login = async (data: ISignIn) => {
-    await UserService.auth(data);
-    const user = { email: data.email, birthDate: '', document: '', name: '' };
+    const user = await UserService.auth(data);
+
     setUser(user);
     localStorage.setItem('user', JSON.stringify(user));
   };
@@ -43,6 +44,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setUser(null);
   };
 
+  const getToken = async () => {
+    const user = localStorage.getItem('user');
+    if (user) {
+      const userParsed = JSON.parse(user) as UserGetResult;
+      return userParsed.token;
+    }
+    return '';
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -50,7 +60,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         user,
         login,
         logOut,
-        signUp
+        signUp,
+        getToken
       }}
     >
       {children}

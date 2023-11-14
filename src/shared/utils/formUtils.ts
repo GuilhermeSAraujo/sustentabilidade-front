@@ -10,7 +10,7 @@ const signUpFormSchema = Yup.object().shape({
     .required("Campo obrigatório")
     .max(14, "CPF informado é inválido")
     .min(14, "CPF informado é inválido"),
-  birthDate: Yup.string()
+  birthdate: Yup.string()
     .required("Campo obrigatório")
     .max(10, "Data de nascimento informada é inválida")
     .min(10, "Data de nascimento informada é inválida"),
@@ -66,10 +66,10 @@ const birthdateMask = (value: string) =>
 const sanitizeSignUp = (data: IFSignUp) => {
   data.document = data.document.replace(/\D/g, '');
 
-  data.birthDate = data.birthDate.replace(/^(\d\d)\/(\d\d)\/(\d{4})$/, (_, day, month, year) => {
+  data.birthdate = data.birthdate.replace(/^(\d\d)\/(\d\d)\/(\d{4})$/, (_, day, month, year) => {
     return `${year}-${month}-${day}`
   });
-
+  console.log('sanitizeSignUp', data);
   return data;
 }
 

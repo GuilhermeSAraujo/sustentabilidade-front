@@ -29,7 +29,7 @@ const SignUp = () => {
   } = useForm<IFSignUp>({
     mode: "onBlur",
     resolver: yupResolver(signUpFormSchema),
-    defaultValues: { document: '', birthDate: '' }
+    defaultValues: { document: '', birthdate: '' }
   });
 
   const submitForm = handleSubmit(async (data) => {
@@ -130,7 +130,7 @@ const SignUp = () => {
               )}
             />
             <Controller
-              name="birthDate"
+              name="birthdate"
               control={control}
               render={({ field: { onChange, value } }) => (
                 <TextField
@@ -139,8 +139,8 @@ const SignUp = () => {
                   label="Data de nascimento"
                   fullWidth
                   required
-                  error={Boolean(errors.birthDate)}
-                  helperText={errors.birthDate?.message}
+                  error={Boolean(errors.birthdate)}
+                  helperText={errors.birthdate?.message}
                 />
               )}
             />
