@@ -24,7 +24,7 @@ interface ProductDetailsProps {
 }
 
 const ProductDetails = ({ barcode, productData, setProductData, setStep }: ProductDetailsProps) => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const getProductData = async () => {
