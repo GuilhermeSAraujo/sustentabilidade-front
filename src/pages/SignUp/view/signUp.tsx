@@ -33,11 +33,9 @@ const SignUp = () => {
   });
 
   const submitForm = handleSubmit(async (data) => {
-    console.log(data);
     try {
       setLoading(true);
       const inputs = sanitizeSignUp(data);
-      console.log(inputs);
       await signUp(inputs);
       history('/singIn');
       setLoading(false);

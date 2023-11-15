@@ -38,7 +38,6 @@ const addProductFormSchema = Yup.object().shape({
 });
 
 const expirationDateMask = (value: string) => {
-  console.log('calleddd')
   return value.replace(/^(\d\d?)(\d\d?)?(\d{4})?/, (_, day, month, year) => {
     let result = "";
     if (day) result += day.padStart(2, "0");
@@ -66,11 +65,15 @@ const birthdateMask = (value: string) =>
 const sanitizeSignUp = (data: IFSignUp) => {
   data.document = data.document.replace(/\D/g, '');
 
-  data.birthdate = data.birthdate.replace(/^(\d\d)\/(\d\d)\/(\d{4})$/, (_, day, month, year) => {
-    return `${year}-${month}-${day}`
-  });
-  console.log('sanitizeSignUp', data);
+  data.birthdate = formatDate(data.birthdate);
+  
   return data;
 }
 
-export { signUpFormSchema, addProductFormSchema, expirationDateMask, cpfMask, birthdateMask, sanitizeSignUp };
+const formatDate = (date: string) => {
+  return date.replace(/^(\d\d)\/(\d\d)\/(\d{4})$/, (_, day, month, year) => {
+    return `${year}-${month}-${day}`
+  });
+};
+
+export { signUpFormSchema, addProductFormSchema, expirationDateMask, cpfMask, birthdateMask, sanitizeSignUp, formatDate };

@@ -1,9 +1,11 @@
 import { Box, Modal, Typography } from "@mui/material";
 import { QrcodeResult } from "html5-qrcode/esm/core";
 import { useState } from "react";
+import { ProductGetResult } from "../../../models/product";
 import { AddProductsSteps } from "../../../shared/enum/addProcutsSteps";
 import BarcodeScanner from "./barCodeScanner";
 import ProductDetails from "./productDetails";
+import SuccessScreen from "./successScreen";
 
 interface ModalAddProductProps {
   modalOpen: boolean;
@@ -12,6 +14,7 @@ interface ModalAddProductProps {
 const ModalAddProduct = ({ modalOpen, setModalOpen }: ModalAddProductProps) => {
   const [step, setStep] = useState(AddProductsSteps.BarcodeScan);
   const [barcode, setBarcode] = useState("");
+  const [productData, setProductData] = useState<ProductGetResult | null>(null);
 
   const handleSuccessScan = (result: QrcodeResult) => {
     setBarcode(result.text);
@@ -22,7 +25,11 @@ const ModalAddProduct = ({ modalOpen, setModalOpen }: ModalAddProductProps) => {
     <>
       <Modal
         open={modalOpen}
-        onClose={() => setModalOpen(false)}
+        onClose={() => {
+          console.log("onclose", productData, step);
+          setModalOpen(false)
+          if (!productData) setStep(AddProductsSteps.BarcodeScan)
+        }}
       >
         <>
           {step === AddProductsSteps.BarcodeScan && (
@@ -39,7 +46,8 @@ const ModalAddProduct = ({ modalOpen, setModalOpen }: ModalAddProductProps) => {
               />
             </Box>
           )}
-          {step === AddProductsSteps.ProductDetails && barcode.length > 0 && <ProductDetails barcode={barcode} />}
+          {step === AddProductsSteps.ProductDetails && barcode.length > 0 && <ProductDetails barcode={barcode} setProductData={setProductData} productData={productData} setStep={setStep} />}
+          {step === AddProductsSteps.SuccessScreen && <SuccessScreen />}
         </>
       </Modal>
     </>
