@@ -48,7 +48,7 @@ const ProductsCarousel = ({ products }: ProductsCarouselProps) => {
     window.addEventListener('resize', handleResize);
 
     return () => { window.removeEventListener('resize', handleResize) }
-  }, []);
+  }, [products]);
 
 
   return (

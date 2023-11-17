@@ -36,8 +36,9 @@ const Home = () => {
                   item
                   xs={12}
                   textAlign="center"
-                  marginTop={{ xs: "10%", md: "10%" }}
-                  marginBottom={{ xs: "10%", md: "10%" }}
+                  marginTop={{ xs: "25%", md: "13%" }}
+                  marginBottom={{ xs: "15%", md: "10%" }}
+                  zIndex={2}
                 >
                   <ModalAddProduct modalOpen={modalOpen} setModalOpen={setModalOpen} />
                   <Button variant="contained" onClick={() => setModalOpen(true)}>
@@ -58,8 +59,8 @@ const Home = () => {
             justifyContent: 'space-between'
           }}
         >
-          <Box component='img' src={EcoImage} sx={{ maxWidth: { xs: '150px', md: '250px' } }} />
-          <Box component='img' src={EcoImage2} sx={{ maxWidth: { xs: '150px', md: '250px' } }} />
+          <Box component='img' src={EcoImage} sx={{ maxWidth: { xs: '150px', md: '250px' } }}  zIndex={1} />
+          <Box component='img' src={EcoImage2} sx={{ maxWidth: { xs: '150px', md: '250px' } }} zIndex={1}/>
         </Grid>
       </Grid>
     </Box >

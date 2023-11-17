@@ -1,4 +1,4 @@
-import { Box, Modal, Typography } from "@mui/material";
+import { Box, Button, Modal, Typography } from "@mui/material";
 import { QrcodeResult } from "html5-qrcode/esm/core";
 import { useEffect, useState } from "react";
 import { ProductDataGetResult } from "../../../models/product";
@@ -16,20 +16,31 @@ const ModalAddProduct = ({ modalOpen, setModalOpen }: ModalAddProductProps) => {
   const [step, setStep] = useState(AddProductsSteps.BarcodeScan);
   const [barcode, setBarcode] = useState("");
   const [productData, setProductData] = useState<ProductDataGetResult | null>(null);
+  const [scannerError, setScannerError] = useState(false);
 
   const [isLoadingProduct, setIsLoadingProduct] = useState(false);
 
   const handleSuccessScan = async (result: QrcodeResult) => {
     if (!isLoadingProduct) {
       setIsLoadingProduct(true);
-      const product = await ProductService.getProductByBarcode(result.text);
-      setProductData(product);
-      setBarcode(result.text);
-      setStep(AddProductsSteps.ProductDetails);
-      setIsLoadingProduct(false);
+      try {
+        const product = await ProductService.getProductByBarcode(result.text);
+        setProductData(product);
+        setBarcode(result.text);
+        setStep(AddProductsSteps.ProductDetails);
+        setIsLoadingProduct(false);
+      } catch (e) {
+        setScannerError(true);
+      } finally {
+        setIsLoadingProduct(false);
+      }
     }
   };
 
+
+  const handleTryAgain = () => {
+    setScannerError(false);
+  }
 
   return (
     <>
@@ -37,6 +48,7 @@ const ModalAddProduct = ({ modalOpen, setModalOpen }: ModalAddProductProps) => {
         open={modalOpen}
         onClose={() => {
           setModalOpen(false)
+          setScannerError(false);
           if (!productData) setStep(AddProductsSteps.BarcodeScan)
         }}
       >
@@ -46,10 +58,24 @@ const ModalAddProduct = ({ modalOpen, setModalOpen }: ModalAddProductProps) => {
               <Typography variant="h6" pb={2}>
                 Leitor de Código de Barras
               </Typography>
-              <BarcodeScanner
-                onResult={handleSuccessScan}
-                onError={(result) => setBarcode(result.errorMessage)}
-              />
+              {scannerError && (
+                <>
+                  <Typography variant="body1" pb={2}>
+                    Desculpe, esse produto ainda não está disponível em nosso banco de dados.
+                  </Typography>
+                  <Box display='flex' justifyContent='center' pb={2}>
+                    <Button variant="contained" onClick={handleTryAgain} >Tentar novamente</Button>
+                  </Box>
+                </>
+              )}
+              {
+                !scannerError && (
+                  <BarcodeScanner
+                    onResult={handleSuccessScan}
+                    onError={(_) => null}
+                  />
+                )
+              }
             </Box>
           )}
           {step === AddProductsSteps.ProductDetails && barcode.length > 0 && <ProductDetails barcode={barcode} setProductData={setProductData} productData={productData} setStep={setStep} />}
