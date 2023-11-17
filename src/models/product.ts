@@ -6,34 +6,45 @@ export interface IFAddProduct {
 }
 
 export interface IPostProduct {
-  /* {
-     "user_id": "837ad4e7-b401-4406-a0b0-fe1f3016ca0b",
-     "product": {
-       "barcode": "123",
-       "name": "Biscoito Nestle",
-       "brand": "Nestle",
-       "description": "Biscoito de aveia Nestle",
-       "average_price": 15.5,
-       "image_url": "https://cdn-cosmos.bluesoft.com.br/products/7891000025871"
-     },
-     "expire_date": "2023-12-24",
-     "quantity": 2
-   }*/
   barcode?: string;
   name?: string;
   brand?: string;
   description?: string;
-  averagePrice?: string;
+  averagePrice?: number;
   imageUrl?: string;
   expirationDate?: string;
   quantity?: number;
 };
 
-export interface ProductGetResult {
+export interface UsersProductsGetResult{
+  expires_within_week: UsersProduct[];
+  expires_between_one_and_two_weeks: UsersProduct[];
+  expires_more_than_two_weeks: UsersProduct[];
+};
+
+export interface IUsersProducts{
+  expiresWithinWeek: UsersProduct[];
+  expiresBetweenOneAndTwoWeeks: UsersProduct[];
+  expiresMoreThanTwoWeeks: UsersProduct[];
+};
+
+export interface UsersProduct{
   barcode: string;
   name: string;
   description: string;
   brand: string;
-  averagePrice: string;
-  imageUrl: string;
-}
+  average_price: string;
+  image_url: string;
+  expire_date: string;
+  quantity: number;
+  days_until_expiry: number;
+};
+
+export interface ProductDataGetResult{
+  barcode: string;
+  name: string;
+  description: string;
+  brand: string;
+  averagePrice: number;
+  image_url: string;
+};

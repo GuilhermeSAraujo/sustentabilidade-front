@@ -9,17 +9,19 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { IFAddProduct, ProductGetResult } from "../../../models/product";
+import { IFAddProduct, ProductDataGetResult } from "../../../models/product";
 import ProductService from "../../../shared/api/productService";
 import { AddProductsSteps } from "../../../shared/enum/addProcutsSteps";
 import {
   addProductFormSchema, birthdateMask
 } from "../../../shared/utils/formUtils";
+import queryClient from "../../../shared/utils/reactQuery";
+
 
 interface ProductDetailsProps {
   barcode: string;
-  productData: ProductGetResult | null;
-  setProductData: (value: ProductGetResult | null) => void;
+  productData: ProductDataGetResult | null;
+  setProductData: (value: ProductDataGetResult | null) => void;
   setStep: (value: AddProductsSteps) => void;
 }
 
@@ -56,13 +58,14 @@ const ProductDetails = ({ barcode, productData, setProductData, setStep }: Produ
         brand: productData?.brand,
         description: productData?.description,
         averagePrice: productData?.averagePrice,
-        imageUrl: productData?.imageUrl,
+        imageUrl: productData?.image_url,
         expirationDate: data.expirationDate,
         quantity: data.quantity,
       });
       reset();
       setProductData(null);
       setStep(AddProductsSteps.SuccessScreen);
+      queryClient.invalidateQueries('products');
     } catch (err) {
       console.log(err);
     } finally {
@@ -137,7 +140,7 @@ const ProductDetails = ({ barcode, productData, setProductData, setStep }: Produ
             {isLoading ? (
               <Grid item xs={12} textAlign='center'>
 
-              <CircularProgress size="30px" />
+                <CircularProgress size="30px" />
               </Grid>
             ) : (
               <Grid item xs={12}>

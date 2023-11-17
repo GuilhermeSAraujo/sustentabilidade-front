@@ -1,9 +1,13 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
+import { useState } from "react";
+import { useProducts } from "../../../hooks/useProducts";
+import { UsersProduct } from "../../../models/product";
+import ProductService from "../../../shared/api/productService";
 import ExpirationTable from "../components/expirationTable";
 import ModalAddProduct from "../components/modalAddProduct";
 import ProductsCarousel from "../components/procutsCarousel";
-import { useState } from "react";
 
+/*
 const productsList = [
   {
     i: 1,
@@ -40,34 +44,52 @@ const productsList = [
       "https://www.jprembalagemsp.com.br/imagens/embalagem/embalagem-para-arroz-5kg-no-jardim-monte-kemel.jpg",
   },
 ];
+*/
 const Home = () => {
   const [modalOpen, setModalOpen] = useState(false);
+
+  const { data: productsList, isLoading } = useProducts();
+
+
+  const produtsToCarousel = () : UsersProduct[]  => {
+    if(productsList){
+      return ProductService.concatProducts(productsList);
+    }
+    return [];
+  }
+
 
   return (
     <Box sx={{ maxWidth: "800px", display: "flex", margin: "auto" }}>
       <Grid container justifyContent="space-evenly">
-        <Grid item xs={12} textAlign="center">
-          <Typography variant="h6" fontWeight={600} mt={1}>
-            Produtos próximos do vencimento
-          </Typography>
-        </Grid>
-        <Grid item xs={12} mt={1}>
-          <ProductsCarousel products={productsList} />
-        </Grid>
-        <Grid item xs={12} mt={8}>
-          <ExpirationTable />
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          textAlign="center"
-          marginTop={{ xs: "25%", md: "5%" }}
-        >
-          <ModalAddProduct modalOpen={modalOpen} setModalOpen={setModalOpen} />
-          <Button variant="contained" onClick={() => setModalOpen(true)}>
-            Adicionar mais produtos
-          </Button>
-        </Grid>
+        {productsList && !isLoading &&
+          (
+            <>
+              <Grid item xs={12} textAlign="center">
+                <Typography variant="h6" fontWeight={600} mt={1}>
+                  Produtos próximos do vencimento
+                </Typography>
+              </Grid>
+              <Grid item xs={12} mt={1}>
+                <ProductsCarousel products={produtsToCarousel()} />
+              </Grid>
+              <Grid item xs={12} mt={8}>
+                <ExpirationTable products={productsList} />
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                textAlign="center"
+                marginTop={{ xs: "25%", md: "5%" }}
+              >
+                <ModalAddProduct modalOpen={modalOpen} setModalOpen={setModalOpen} />
+                <Button variant="contained" onClick={() => setModalOpen(true)}>
+                  Adicionar mais produtos
+                </Button>
+              </Grid>
+            </>
+          )}
+
       </Grid>
     </Box>
   );

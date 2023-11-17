@@ -10,8 +10,13 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import { IUsersProducts } from "../../../models/product";
 
-const ExpirationTable = () => {
+interface ExpirationTableProps {
+  products: IUsersProducts;
+};
+
+const ExpirationTable = ({ products }: ExpirationTableProps) => {
   return (
     <Grid container px={3} justifyContent="center">
       <Grid item xs={12} md={7}>
@@ -37,8 +42,8 @@ const ExpirationTable = () => {
                   <TableCell component="th" scope="row">
                     Em até 1 semana
                   </TableCell>
-                  <TableCell align="left" sx={{ backgroundColor: "#ffb2ae" }}>
-                    <span style={{ fontWeight: "bold" }}>3</span> produtos
+                  <TableCell align="left" sx={{ backgroundColor: products.expiresWithinWeek.length > 0 ? "#ffb2ae" : "#c8ebc8" }}>
+                    <span style={{ fontWeight: "bold" }}>{products.expiresWithinWeek.length}</span> produtos
                   </TableCell>
                 </TableRow>
                 <TableRow
@@ -48,7 +53,7 @@ const ExpirationTable = () => {
                     Entre 7 à 15 dias
                   </TableCell>
                   <TableCell align="left">
-                    <span style={{ fontWeight: "bold" }}>1</span> produto
+                    <span style={{ fontWeight: "bold" }}>{products.expiresBetweenOneAndTwoWeeks.length}</span> produto
                   </TableCell>
                 </TableRow>
                 <TableRow
@@ -58,7 +63,7 @@ const ExpirationTable = () => {
                     Em mais de 15 dias
                   </TableCell>
                   <TableCell align="left">
-                    <span style={{ fontWeight: "bold" }}>5</span> produtos
+                    <span style={{ fontWeight: "bold" }}>{products.expiresMoreThanTwoWeeks.length}</span> produtos
                   </TableCell>
                 </TableRow>
               </TableBody>

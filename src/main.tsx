@@ -5,15 +5,20 @@ import "./main.css";
 import Router from "./routes/components/Router";
 import { AuthProvider } from "./contexts/auth";
 import { themeOptions } from "./shared/themeOptions";
+import { QueryClientProvider } from "react-query";
+import queryClient from "./shared/utils/reactQuery";
+
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <ThemeProvider theme={themeOptions}>
-      <Box className="main">
-        <AuthProvider>
-          <Router />
-        </AuthProvider>
-      </Box>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={themeOptions}>
+        <Box className="main">
+          <AuthProvider>
+            <Router />
+          </AuthProvider>
+        </Box>
+      </ThemeProvider>
+    </QueryClientProvider>
   </React.StrictMode>
 );

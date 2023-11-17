@@ -1,7 +1,7 @@
 import { Box, Modal, Typography } from "@mui/material";
 import { QrcodeResult } from "html5-qrcode/esm/core";
 import { useState } from "react";
-import { ProductGetResult } from "../../../models/product";
+import { ProductDataGetResult } from "../../../models/product";
 import { AddProductsSteps } from "../../../shared/enum/addProcutsSteps";
 import BarcodeScanner from "./barCodeScanner";
 import ProductDetails from "./productDetails";
@@ -14,7 +14,7 @@ interface ModalAddProductProps {
 const ModalAddProduct = ({ modalOpen, setModalOpen }: ModalAddProductProps) => {
   const [step, setStep] = useState(AddProductsSteps.BarcodeScan);
   const [barcode, setBarcode] = useState("");
-  const [productData, setProductData] = useState<ProductGetResult | null>(null);
+  const [productData, setProductData] = useState<ProductDataGetResult | null>(null);
 
   const handleSuccessScan = (result: QrcodeResult) => {
     setBarcode(result.text);
