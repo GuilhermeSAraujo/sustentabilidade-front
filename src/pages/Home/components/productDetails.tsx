@@ -28,14 +28,6 @@ interface ProductDetailsProps {
 const ProductDetails = ({ barcode, productData, setProductData, setStep }: ProductDetailsProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const getProductData = async () => {
-      const product = await ProductService.getProductByBarcode(barcode);
-      setProductData(product);
-    };
-
-    getProductData();
-  }, []);
 
   const {
     register,
@@ -81,9 +73,10 @@ const ProductDetails = ({ barcode, productData, setProductData, setStep }: Produ
             Informações do produto
           </Typography>
         </Grid>
-        <form onSubmit={submitForm}>
+        <form onSubmit={submitForm} style={{ width: '100%' }}>
           <Grid item xs={12} pb={3}>
             <TextField
+              fullWidth
               label="Código de barras"
               variant="outlined"
               value={barcode}
@@ -97,7 +90,9 @@ const ProductDetails = ({ barcode, productData, setProductData, setStep }: Produ
             <>
               <Grid item xs={12} pb={3}>
                 <TextField
+                  fullWidth
                   value={productData.name}
+                  label="Produto"
                   variant="outlined"
                   error={Boolean(errors.productName)}
                   helperText={errors.productName?.message}
@@ -125,6 +120,7 @@ const ProductDetails = ({ barcode, productData, setProductData, setStep }: Produ
               </Grid>
               <Grid item xs={12} pb={3}>
                 <TextField
+                  fullWidth
                   label="Quantidade"
                   variant="outlined"
                   type="number"

@@ -22,10 +22,10 @@ class ProductService {
 
         /*await new Promise<void>((resolve) =>
             setTimeout(() => {
-                resolve();
+                resolve(product);
             }, 2500)
         );*/
-
+        // return product;
         return product.data;
     };
 
@@ -50,15 +50,7 @@ class ProductService {
             user_id: userLoggedIn.id,
         }
 
-        const response = await axios.post("http://localhost:9999/api/product/assign",
-            payload,
-            { headers: { Authorization: `Bearer ${userLoggedIn.token}` } });
-        await new Promise<void>((resolve) =>
-            setTimeout(() => {
-                resolve();
-            }, 2500)
-        );
-        return response;
+        await axios.post("http://localhost:9999/api/product/assign", payload, { headers: { Authorization: `Bearer ${userLoggedIn.token}` } });
     };
 
     getUserProducts = async (): Promise<IUsersProducts> => {

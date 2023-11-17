@@ -9,6 +9,12 @@ import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useAuth } from "../../../hooks/useAuth";
 import { IFSignIn } from "../../../models/user";
+import { AxiosError } from "axios";
+
+interface ErrorObj {
+  state: boolean;
+  message: string;
+};
 
 const SignIn = () => {
   const history = useNavigate();
@@ -16,7 +22,7 @@ const SignIn = () => {
   const { login } = useAuth()
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<ErrorObj | null>(null);
 
   const formSchema = Yup.object().shape({
     email: Yup.string()
@@ -40,8 +46,19 @@ const SignIn = () => {
       await login({ email: data.email, password: data.password });
       setLoading(false);
       history("/home");
-    } catch (err) {
-      setError(true);
+    } catch (err: unknown) {
+      console.log(err);
+      const errorObj = {
+        state: true,
+        message: "Ocorreu um erro. Tente novamente em alguns instantes."
+      };
+
+      if (err instanceof AxiosError && err.response?.status === 404) {
+        errorObj.message = "Usuário não encontrado.";
+      }else if(err instanceof AxiosError && err.response?.status === 401){
+        errorObj.message = "Senha incorreta.";
+      }
+      setError(errorObj);
     } finally {
       setLoading(false);
     }
@@ -65,18 +82,18 @@ const SignIn = () => {
                 color="inherit"
                 size="small"
                 onClick={() => {
-                  setError(false);
+                  setError({ message: '', state: false });
                 }}
               >
                 <CloseIcon fontSize="inherit" />
               </IconButton>
             }
           >
-            Ocorreu um erro. Tente novamente em alguns minutos.
+            {error.message}
           </Alert>
-        </Box>
+        </Box >
       )}
-      <Box pb={3} sx={{textAlign: 'center'}}>
+      <Box pb={3} sx={{ textAlign: 'center' }}>
         <ForestIcon fontSize="large" />
         <Typography variant="h4" fontWeight={500} sx={{ textAlign: "center" }}>Seja bem vindo(a) de volta!</Typography>
       </Box>
@@ -134,7 +151,7 @@ const SignIn = () => {
           Não possui uma conta? <Link to="/signup">Clique aqui.</Link>
         </Typography>
       </Box>
-    </Box>
+    </Box >
   );
 };
 

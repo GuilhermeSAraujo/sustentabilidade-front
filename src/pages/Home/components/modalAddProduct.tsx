@@ -1,11 +1,12 @@
 import { Box, Modal, Typography } from "@mui/material";
 import { QrcodeResult } from "html5-qrcode/esm/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ProductDataGetResult } from "../../../models/product";
 import { AddProductsSteps } from "../../../shared/enum/addProcutsSteps";
 import BarcodeScanner from "./barCodeScanner";
 import ProductDetails from "./productDetails";
 import SuccessScreen from "./successScreen";
+import ProductService from "../../../shared/api/productService";
 
 interface ModalAddProductProps {
   modalOpen: boolean;
@@ -16,10 +17,19 @@ const ModalAddProduct = ({ modalOpen, setModalOpen }: ModalAddProductProps) => {
   const [barcode, setBarcode] = useState("");
   const [productData, setProductData] = useState<ProductDataGetResult | null>(null);
 
-  const handleSuccessScan = (result: QrcodeResult) => {
-    setBarcode(result.text);
-    setStep(AddProductsSteps.ProductDetails);
+  const [isLoadingProduct, setIsLoadingProduct] = useState(false);
+
+  const handleSuccessScan = async (result: QrcodeResult) => {
+    if (!isLoadingProduct) {
+      setIsLoadingProduct(true);
+      const product = await ProductService.getProductByBarcode(result.text);
+      setProductData(product);
+      setBarcode(result.text);
+      setStep(AddProductsSteps.ProductDetails);
+      setIsLoadingProduct(false);
+    }
   };
+
 
   return (
     <>
@@ -33,11 +43,8 @@ const ModalAddProduct = ({ modalOpen, setModalOpen }: ModalAddProductProps) => {
         <>
           {step === AddProductsSteps.BarcodeScan && (
             <Box sx={modalStyle}>
-              <Typography variant="body1">
+              <Typography variant="h6" pb={2}>
                 Leitor de Código de Barras
-              </Typography>
-              <Typography variant="body2">
-                Valor do código de barras: {barcode}
               </Typography>
               <BarcodeScanner
                 onResult={handleSuccessScan}

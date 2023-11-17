@@ -23,12 +23,14 @@ register();
 const ProductsCarousel = ({ products }: ProductsCarouselProps) => {
   console.log('products', products);
   const theme = useTheme();
-  const [slidesPerView, setSlidePerView] = useState(2);
+  const [slidesPerView, setSlidePerView] = useState(1);
 
 
   useEffect(() => {
     const handleResize = () => {
-      if (products.length >= 3) {
+      if (products.length === 1) {
+        setSlidePerView(1);
+      } else if (products.length >= 3) {
         if (window.innerWidth < 720) {
           setSlidePerView(2);
         } else {
@@ -36,8 +38,6 @@ const ProductsCarousel = ({ products }: ProductsCarouselProps) => {
         }
       } else if (products.length === 2) {
         setSlidePerView(2);
-      } else {
-        setSlidePerView(1);
       }
     }
 
@@ -65,28 +65,35 @@ const ProductsCarousel = ({ products }: ProductsCarouselProps) => {
         >
           {products.length > 0 && products.map((product, i) => (
             <SwiperSlide key={i}>
-              <Grid item xs={12} textAlign="center" height='80%'>
+              <Grid item xs={12} sx={{ textAlign: '-webkit-center' }} height='80%'>
                 <Box
                   p={1}
                   sx={{
+                    py: 2,
                     display: "flex",
                     alignItems: 'center',
                     backgroundColor: theme.palette.background.paper,
                     borderRadius: "15px",
                     boxShadow: "0px 7px 15px 3px rgba(0,0,0,0.25)",
                     height: '100%',
-                    width: '80%',
+                    width: products.length === 1 ? '50%' : '80%',
                     margin: { xs: 1, md: 2 },
                   }}
                 >
                   <Box marginRight={0.5} sx={{ flex: 1, alignSelf: "center" }}>
                     <Typography variant="body1" fontWeight={600}>{truncateText(product.name, 35)}</Typography>
-                    <Typography variant="body1">
-                      <span style={{ color: 'red', fontWeight: 'bold' }}>{product.days_until_expiry}</span> dias para expiração
-                    </Typography>
-                    <Typography variant="body2">
-                      {product.expireDate}
-                    </Typography>
+
+                    {product.days_until_expiry >= 0 && product.days_until_expiry < 1 && (
+                      <Typography variant="body1">
+                        <span style={{ color: 'red', fontWeight: 'bold' }}>Menos de 1 dia</span> para expiração
+                      </Typography>
+                    )}
+
+                    {product.days_until_expiry >= 1 && (
+                      <Typography variant="body1">
+                        <span style={{ color: 'red', fontWeight: 'bold' }}>{product.days_until_expiry} {product.days_until_expiry === 1 ? "dia" : "dias"}</span> para expiração
+                      </Typography>
+                    )}
                   </Box>
                   {product.image_url?.length > 0 ? (
                     <Box
