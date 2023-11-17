@@ -26,7 +26,6 @@ const ModalAddProduct = ({ modalOpen, setModalOpen }: ModalAddProductProps) => {
       <Modal
         open={modalOpen}
         onClose={() => {
-          console.log("onclose", productData, step);
           setModalOpen(false)
           if (!productData) setStep(AddProductsSteps.BarcodeScan)
         }}

@@ -44,7 +44,7 @@ export const BarcodeScanner = ({ onResult, onError }: BarcodeScannerProps) => {
       didStart
         .then(() => html5QrcodeScanner.stop())
         .catch(() => {
-          console.log("Error stopping scanner");
+          console.error("Error stopping scanner");
         });
     };
   }, [previewRef, memoizedResultHandler, memoizedErrorHandler]);

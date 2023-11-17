@@ -67,7 +67,7 @@ const ProductDetails = ({ barcode, productData, setProductData, setStep }: Produ
       setStep(AddProductsSteps.SuccessScreen);
       queryClient.invalidateQueries('products');
     } catch (err) {
-      console.log(err);
+      console.error(err);
     } finally {
       setIsLoading(false);
     }
