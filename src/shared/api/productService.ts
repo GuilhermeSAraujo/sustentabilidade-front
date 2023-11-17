@@ -72,7 +72,8 @@ class ProductService {
 
     };
 
-    concatProducts = (productsList: IUsersProducts): UsersProduct[] => {
+    concatProducts = (productsList: IUsersProducts | undefined): UsersProduct[] => {
+        if(!productsList) return [];
         return productsList.expiresWithinWeek.concat(productsList.expiresBetweenOneAndTwoWeeks, productsList.expiresMoreThanTwoWeeks);
     }
 }

@@ -8,65 +8,14 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-
-const produtos = [
-  {
-    image:
-      "https://io.convertiez.com.br/m/trimais/shop/products/images/3843/medium/nuggets-de-frango-seara-turma-da-monica-300-g_3803.jpg",
-    name: "Noget Seara",
-    quantity: 1,
-    expirationDate: new Date(),
-    registrationDate: new Date(),
-  },
-  {
-    image:
-      "https://debetti.com.br/cdn/shop/files/ketchup-tomato-heinz.jpg?v=1684260840&width=1080",
-    name: "Ketchup Heiz",
-    quantity: 2,
-    expirationDate: new Date(),
-    registrationDate: new Date(),
-  },
-  {
-    image:
-      "https://www.jprembalagemsp.com.br/imagens/embalagem/embalagem-para-arroz-5kg-no-jardim-monte-kemel.jpg",
-    name: "Arroz Tia Jú",
-    quantity: 1,
-    expirationDate: new Date(),
-    registrationDate: new Date(),
-  },
-  // {
-  //   image: "https://www.jprembalagemsp.com.br/imagens/embalagem/embalagem-para-arroz-5kg-no-jardim-monte-kemel.jpg",
-  //   name: 'Elvis',
-  //   quantity: 4,
-  //   expirationDate: new Date(),
-  //   registrationDate: new Date(),
-  // },
-  // {
-  //   image: "https://www.jprembalagemsp.com.br/imagens/embalagem/embalagem-para-arroz-5kg-no-jardim-monte-kemel.jpg",
-  //   name: 'Jorge',
-  //   quantity: 6,
-  //   expirationDate: new Date(),
-  //   registrationDate: new Date(),
-  // },
-  // {
-  //   image: "https://www.jprembalagemsp.com.br/imagens/embalagem/embalagem-para-arroz-5kg-no-jardim-monte-kemel.jpg",
-  //   name: 'Claudia',
-  //   quantity: 1,
-  //   expirationDate: new Date(),
-  //   registrationDate: new Date(),
-  // },
-  // {
-  //   image: "https://www.jprembalagemsp.com.br/imagens/embalagem/embalagem-para-arroz-5kg-no-jardim-monte-kemel.jpg",
-  //   name: 'Eliabner',
-  //   quantity: 20,
-  //   expirationDate: new Date(),
-  //   registrationDate: new Date(),
-  // },
-];
+import { useProducts } from "../../../hooks/useProducts";
+import ProductService from "../../../shared/api/productService";
 
 export default function Products() {
+  const { data: products } = useProducts();
+
   return (
-    <Box sx={{ padding: "10px 10px 0 10px" }}>
+    <Box sx={{ paddingX: 6, paddingY: 3 }}>
       <TableContainer component={Paper}>
         <Table
           sx={{ minWidth: 650, backgroundColor: "beige" }}
@@ -116,21 +65,10 @@ export default function Products() {
               >
                 Data de Vencimento
               </TableCell>
-              <TableCell
-                align="right"
-                sx={{
-                  fontWeight: "bold",
-                  fontSize: "1.5rem",
-                  textAlign: "center",
-                  verticalAlign: "middle",
-                }}
-              >
-                Data de Cadastro
-              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {produtos.map((produto, index) => (
+            {ProductService.concatProducts(products).map((product, index) => (
               <TableRow
                 key={index}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -147,16 +85,16 @@ export default function Products() {
                 >
                   <Box
                     component="img"
-                    src={produto.image}
+                    src={product.image_url}
                     sx={{
                       display: "inline-block",
-                      maxWidth: "100px",
+                      maxWidth: {xs: "50px", md: '250px'},
+                      maxHeight: "150px",
                       borderRadius: "15px",
                       margin: "0 auto",
                     }}
                   />
                 </TableCell>
-
                 <TableCell
                   align="right"
                   sx={{
@@ -165,7 +103,7 @@ export default function Products() {
                     verticalAlign: "middle",
                   }}
                 >
-                  {produto.name}
+                  {product.name}
                 </TableCell>
                 <TableCell
                   align="right"
@@ -180,7 +118,7 @@ export default function Products() {
                     alignItems="center"
                     justifyContent="center"
                   >
-                    <Box mx={1}>{produto.quantity}</Box>
+                    <Box mx={1}>{product.quantity}</Box>
                   </Box>
                 </TableCell>
                 <TableCell
@@ -189,19 +127,10 @@ export default function Products() {
                     fontSize: "1.2rem",
                     textAlign: "center",
                     verticalAlign: "middle",
+                    backgroundColor: product.days_until_expiry <= 7 ? "#ffb2ae" : 'none'
                   }}
                 >
-                  {produto.expirationDate.toLocaleDateString()}
-                </TableCell>
-                <TableCell
-                  align="right"
-                  sx={{
-                    fontSize: "1.2rem",
-                    textAlign: "center",
-                    verticalAlign: "middle",
-                  }}
-                >
-                  {produto.registrationDate.toLocaleDateString()}
+                  {new Date(product.expire_date).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "2-digit" })}
                 </TableCell>
               </TableRow>
             ))}

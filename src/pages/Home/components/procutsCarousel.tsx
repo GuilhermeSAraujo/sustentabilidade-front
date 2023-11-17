@@ -2,6 +2,7 @@ import {
   Box,
   Grid,
   Typography,
+  useMediaQuery,
   useTheme
 } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -21,9 +22,10 @@ interface ProductsCarouselProps {
 register();
 
 const ProductsCarousel = ({ products }: ProductsCarouselProps) => {
-  console.log('products', products);
   const theme = useTheme();
   const [slidesPerView, setSlidePerView] = useState(1);
+  const isMobile = useMediaQuery("(max-width: 600px)");
+
 
 
   useEffect(() => {
@@ -76,12 +78,12 @@ const ProductsCarousel = ({ products }: ProductsCarouselProps) => {
                     borderRadius: "15px",
                     boxShadow: "0px 7px 15px 3px rgba(0,0,0,0.25)",
                     height: '100%',
-                    width: products.length === 1 ? '50%' : '80%',
+                    width: products.length === 1 ? '50%' : '90%',
                     margin: { xs: 1, md: 2 },
                   }}
                 >
                   <Box marginRight={0.5} sx={{ flex: 1, alignSelf: "center" }}>
-                    <Typography variant="body1" fontWeight={600}>{truncateText(product.name, 35)}</Typography>
+                    <Typography variant={isMobile ? "body2" : "body1"} fontWeight={600} pb={1}>{truncateText(product.name, isMobile ? 20 : 35)}</Typography>
 
                     {product.days_until_expiry >= 0 && product.days_until_expiry < 1 && (
                       <Typography variant="body1">

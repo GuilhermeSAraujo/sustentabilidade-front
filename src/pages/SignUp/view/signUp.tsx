@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import CloseIcon from "@mui/icons-material/Close";
 import NaturePeopleIcon from '@mui/icons-material/NaturePeople';
 import { LoadingButton } from "@mui/lab";
-import { Alert, Box, IconButton, TextField, Typography, useTheme } from "@mui/material";
+import { Alert, Box, IconButton, TextField, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
@@ -13,6 +13,8 @@ import { birthdateMask, cpfMask, sanitizeSignUp, signUpFormSchema } from "../../
 
 
 const SignUp = () => {
+  const isMobile = useMediaQuery("(max-width: 600px)");
+
   const history = useNavigate();
   const theme = useTheme();
   const { signUp } = useAuth();
@@ -49,6 +51,8 @@ const SignUp = () => {
   return (
     <Box
       height="100vh"
+      py={{xs: '10%', sm: '5%', md: '0%'}}
+      px='5%'
       display="flex"
       flexDirection="column"
       alignItems="center"
@@ -75,14 +79,15 @@ const SignUp = () => {
           </Alert>
         </Box>
       )}
-      <Box sx={{ textAlign: 'center', paddingTop: { xs: 3 } }} >
+      <Box sx={{ textAlign: 'center', paddingTop: { xs: 2 } }} >
         <NaturePeopleIcon fontSize="large" />
       </Box>
-      <Box sx={{ textAlign: 'center' }} pb={3}>
-        <Typography variant="h4" fontWeight={500} sx={{ textAlign: "center" }}>Mudando o mundo, um passo sustentável de cada vez</Typography>
+      <Box sx={{ textAlign: 'center' }} pb={2}>
+        <Typography variant={isMobile ? "h5" : "h4"} fontWeight={500} sx={{ textAlign: "center" }}>Mudando o mundo, um passo sustentável de cada vez</Typography>
       </Box>
       <Box
         width="85%"
+        height='auto'
         border="1px solid lightgray"
         borderRadius="2.5%"
         padding={2.5}
