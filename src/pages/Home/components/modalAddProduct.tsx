@@ -1,12 +1,12 @@
 import { Box, Button, Modal, Typography } from "@mui/material";
 import { QrcodeResult } from "html5-qrcode/esm/core";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ProductDataGetResult } from "../../../models/product";
+import ProductService from "../../../shared/api/productService";
 import { AddProductsSteps } from "../../../shared/enum/addProcutsSteps";
 import BarcodeScanner from "./barCodeScanner";
 import ProductDetails from "./productDetails";
 import SuccessScreen from "./successScreen";
-import ProductService from "../../../shared/api/productService";
 
 interface ModalAddProductProps {
   modalOpen: boolean;

@@ -12,7 +12,7 @@ import {
     RiceBowlOutlined as RiceBowlOutlinedIcon,
 } from '@mui/icons-material';
 
-export const iconGenerator = (props) => {
+export const iconGenerator = (props : any) => {
     const icons = [
         EmojiFoodBeverageOutlinedIcon,
         LunchDiningOutlinedIcon,

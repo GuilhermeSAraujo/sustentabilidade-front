@@ -7,7 +7,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { IFAddProduct, ProductDataGetResult } from "../../../models/product";
 import ProductService from "../../../shared/api/productService";
