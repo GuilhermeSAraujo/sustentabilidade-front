@@ -130,7 +130,7 @@ export default function Products() {
                     backgroundColor: product.days_until_expiry <= 7 ? "#ffb2ae" : 'none'
                   }}
                 >
-                  {new Date(product.expire_date).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "2-digit" })}
+                  {new Date(new Date(product.expire_date).getTime() + new Date().getTimezoneOffset() * 60000).toLocaleDateString("pt-BR")}
                 </TableCell>
               </TableRow>
             ))}
