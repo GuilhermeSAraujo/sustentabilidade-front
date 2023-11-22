@@ -21,22 +21,22 @@ const Home = () => {
           {productsList && !isLoading &&
             (
               <>
-                <Grid item xs={12} textAlign="center">
+                <Grid item xs={12} textAlign="center" pt={1}>
                   <Typography variant="h6" fontWeight={600} mt={1}>
                     Produtos próximos do vencimento
                   </Typography>
                 </Grid>
-                <Grid item xs={12} mt={1}>
+                <Grid item xs={12} pt={1}>
                   <ProductsCarousel products={ProductService.concatProducts(productsList)} />
                 </Grid>
-                <Grid item xs={12} mt={8}>
+                <Grid item xs={12} sx={{paddingTop:{xs: 0, md: 3}}}>
                   <ExpirationTable products={productsList} />
                 </Grid>
                 <Grid
                   item
                   xs={12}
                   textAlign="center"
-                  marginTop={{ xs: "25%", md: "13%" }}
+                  paddingTop={{ xs: "10%", md: "13%" }}
                   marginBottom={{ xs: "15%", md: "10%" }}
                   zIndex={2}
                 >
