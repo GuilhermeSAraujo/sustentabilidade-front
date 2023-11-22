@@ -15,7 +15,7 @@ export default function Products() {
   const { data: products } = useProducts();
 
   return (
-    <Box sx={{ paddingX: 6, paddingY: 3 }}>
+    <Box sx={{ paddingX: {xs: 1, md: 3}, paddingY: 3 }}>
       <TableContainer component={Paper}>
         <Table
           sx={{ minWidth: 650, backgroundColor: "beige" }}
@@ -26,7 +26,7 @@ export default function Products() {
               <TableCell
                 sx={{
                   fontWeight: "bold",
-                  fontSize: "1.5rem",
+                  fontSize: "1.1rem",
                   textAlign: "center",
                 }}
               >
@@ -36,7 +36,7 @@ export default function Products() {
                 align="right"
                 sx={{
                   fontWeight: "bold",
-                  fontSize: "1.5rem",
+                  fontSize: "1.1rem",
                   textAlign: "center",
                   verticalAlign: "middle",
                 }}
@@ -47,7 +47,7 @@ export default function Products() {
                 align="right"
                 sx={{
                   fontWeight: "bold",
-                  fontSize: "1.5rem",
+                  fontSize: "1.1rem",
                   textAlign: "center",
                   verticalAlign: "middle",
                 }}
@@ -58,7 +58,7 @@ export default function Products() {
                 align="right"
                 sx={{
                   fontWeight: "bold",
-                  fontSize: "1.5rem",
+                  fontSize: "1.1rem",
                   textAlign: "center",
                   verticalAlign: "middle",
                 }}
@@ -98,7 +98,7 @@ export default function Products() {
                 <TableCell
                   align="right"
                   sx={{
-                    fontSize: "1.2rem",
+                    fontSize: "1rem",
                     textAlign: "center",
                     verticalAlign: "middle",
                   }}
@@ -108,7 +108,7 @@ export default function Products() {
                 <TableCell
                   align="right"
                   sx={{
-                    fontSize: "1.2rem",
+                    fontSize: "1rem",
                     textAlign: "center",
                     verticalAlign: "middle",
                   }}
@@ -124,7 +124,7 @@ export default function Products() {
                 <TableCell
                   align="right"
                   sx={{
-                    fontSize: "1.2rem",
+                    fontSize: "1rem",
                     textAlign: "center",
                     verticalAlign: "middle",
                     backgroundColor: product.days_until_expiry <= 7 ? "#ffb2ae" : 'none'

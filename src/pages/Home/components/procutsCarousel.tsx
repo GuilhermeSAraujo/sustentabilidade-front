@@ -24,24 +24,19 @@ register();
 const ProductsCarousel = ({ products }: ProductsCarouselProps) => {
   const theme = useTheme();
   const [slidesPerView, setSlidePerView] = useState(1);
-  const isMobile = useMediaQuery("(max-width: 600px)");
-
-
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
     const handleResize = () => {
       if (products.length === 1) {
-          console.log('entrou aqui? 3')
           setSlidePerView(1);
       } else if (products.length >= 3) {
         if (isMobile) {
           setSlidePerView(2);
         } else {
-          console.log('entrou aqui?')
           setSlidePerView(3);
         }
       } else if (products.length === 2) {
-          console.log('entrou aqui?2')
           setSlidePerView(2);
       }
     }
@@ -62,7 +57,7 @@ const ProductsCarousel = ({ products }: ProductsCarouselProps) => {
         <Swiper
           slidesPerView={slidesPerView}
           navigation
-          autoplay={{ delay: 5000 }}
+          autoplay={{ delay: 2500 }}
 
         >
           {products.length > 0 && products.map((product, i) => (
