@@ -31,24 +31,24 @@ const ProductsCarousel = ({ products }: ProductsCarouselProps) => {
   useEffect(() => {
     const handleResize = () => {
       if (products.length === 1) {
-        setSlidePerView(1);
+          console.log('entrou aqui? 3')
+          setSlidePerView(1);
       } else if (products.length >= 3) {
-        if (window.innerWidth < 720) {
+        if (isMobile) {
           setSlidePerView(2);
         } else {
+          console.log('entrou aqui?')
           setSlidePerView(3);
         }
       } else if (products.length === 2) {
-        setSlidePerView(2);
+          console.log('entrou aqui?2')
+          setSlidePerView(2);
       }
     }
 
     handleResize();
 
-    window.addEventListener('resize', handleResize);
-
-    return () => { window.removeEventListener('resize', handleResize) }
-  }, [products]);
+  }, [products, isMobile]);
 
 
   return (
